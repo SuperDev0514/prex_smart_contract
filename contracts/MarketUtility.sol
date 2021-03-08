@@ -27,8 +27,8 @@ contract MarketUtility {
   uint256 internal minStakeForMultiplier;
   uint256 internal riskPercentage;
   uint256 internal tokenStakeForDispute;
-  address internal plotToken;
-  address internal plotETHpair;
+  address internal plexToken;
+  address internal plexETHpair;
   address internal weth;
   address internal initiater;
   address public authorizedAddress;
@@ -66,7 +66,7 @@ contract MarketUtility {
     _setInitialParameters();
     authorizedAddress = msg.sender;
     tokenController = ITokenController(IMarketRegistry(msg.sender).tokenController());
-    plotToken = _addressParams[1];
+    plexToken = _addressParams[1];
     initiater = _initiater;
     weth = IUniswapV2Router02(_addressParams[0]).WETH();
     uniswapFactory = IUniswapV2Factory(_addressParams[2]);
@@ -87,42 +87,89 @@ contract MarketUtility {
     tokenStakeForDispute = 500 ether;
   }
 
+
   /**
-  * @dev Calculate the prediction value, passing all the required params
-  * params index
-  * 0 _prediction
-  * 1 neutralMinValue
-  * 2 neutralMaxValue
-  * 3 startTime
-  * 4 expireTime
-  * 5 totalStakedETH
-  * 6 totalStakedToken
-  * 7 ethStakedOnOption
-  * 8 plotStakedOnOption
-  * 9 _stake
-  * 10 _leverage
-  */
-  function calculatePredictionValue(uint[] memory params, address asset, address user, address marketFeedAddress, bool _checkMultiplier) public view returns(uint _predictionValue, bool _multiplierApplied) {
-    uint _stakeValue = getAssetValueETH(asset, params[9]);
-    if(_stakeValue < minPredictionAmount || _stakeValue > maxPredictionAmount) {
-      return (_predictionValue, _multiplierApplied);
+    * @dev Get price of provided feed address
+    * @param _currencyFeedAddress  Feed Address of currency on which market options are based on
+    * @return Current price of the market currency
+    **/
+  function getSettlemetPrice(
+    address _currencyFeedAddress,
+    uint256 _settleTime
+  ) public view returns (uint256 latestAnswer, uint256 roundId) {
+    uint80 currentRoundId;
+    uint256 currentRoundTime;
+    int256 currentRoundAnswer;
+    (currentRoundId, currentRoundAnswer, , currentRoundTime, )= IChainLinkOracle(_currencyFeedAddress).latestRoundData();
+    while(currentRoundTime > _settleTime) {
+      currentRoundId--;
+      (currentRoundId, currentRoundAnswer, , currentRoundTime, )= IChainLinkOracle(_currencyFeedAddress).getRoundData(currentRoundId);
+      if(currentRoundTime <= _settleTime) {
+        break;
+      }
     }
-    uint optionPrice;
-    
-    optionPrice = calculateOptionPrice(params, marketFeedAddress);
-    _predictionValue = _calculatePredictionPoints(_stakeValue.mul(positionDecimals), optionPrice, params[10]);
-    if(_checkMultiplier) {
-      return checkMultiplier(asset, user, params[9],  _predictionValue, _stakeValue);
-    }
-    return (_predictionValue, _multiplierApplied);
+    return
+      (uint256(currentRoundAnswer), currentRoundId);
   }
 
-  function _calculatePredictionPoints(uint value, uint optionPrice, uint _leverage) internal pure returns(uint) {
-    //leverageMultiplier = levergage + (leverage -1)*0.05; Raised by 3 decimals i.e 1000
-    uint leverageMultiplier = 1000 + (_leverage-1)*50;
-    value = value.mul(2500).div(1e18);
-    // (amount*sqrt(amount*100)*leverage*100/(price*10*125000/1000));
-    return value.mul(sqrt(value.mul(10000))).mul(_leverage*100*leverageMultiplier).div(optionPrice.mul(1250000000));
+  /**
+    * @dev Get value of provided currency address in ETH
+    * @param _currencyAddress Address of currency
+    * @param _amount Amount of provided currency
+    * @return Value of provided amount in ETH
+    **/
+  function getAssetValueETH(address _currencyAddress, uint256 _amount)
+    public
+    view
+    returns (uint256 tokenEthValue)
+  {
+    tokenEthValue = _amount;
+    if (_currencyAddress != ETH_ADDRESS) {
+        tokenEthValue = getPrice(plexETHpair, _amount);
+    }
+  }
+  
+  /**
+    * @dev Get price of provided currency address in ETH
+    * @param _currencyAddress Address of currency
+    * @return Price of provided currency in ETH
+    * @return Decimals of the currency
+    **/
+  function getAssetPriceInETH(address _currencyAddress)
+    public
+    view
+    returns (uint256 tokenEthValue, uint256 decimals)
+  {
+    tokenEthValue = 1;
+    if (_currencyAddress != ETH_ADDRESS) {
+      decimals = IToken(_currencyAddress).decimals();
+      tokenEthValue = getPrice(plexETHpair, 10**decimals);
+    }
+  }
+  
+  /**
+    * @dev Get price of provided feed address
+    * @param _currencyFeedAddress  Feed Address of currency on which market options are based on
+    * @return Current price of the market currency
+    **/
+  function getAssetPriceUSD(
+    address _currencyFeedAddress
+  ) public view returns (uint256 latestAnswer) {
+    return uint256(IChainLinkOracle(_currencyFeedAddress).latestAnswer());
+  }
+
+
+  /**
+    * @dev Get value of token in pair
+    **/
+  function getPrice(address pair, uint256 amountIn)
+    public
+    view
+    returns (uint256 amountOut)
+  {
+    amountOut = (uniswapPairData[pair].price0Average)
+      .mul(amountIn)
+      .decode144();
   }
 
 }

@@ -24,11 +24,6 @@ contract MarketRegistry is Governed, Iupgradable {
       uint64 optionRangePerc;
     }
 
-    struct MarketCurrency {
-      address marketImplementation;
-      uint8 decimals;
-    }
-
     struct MarketCreationData {
       uint64 initialStartTime;
       address marketAddress;
@@ -89,5 +84,48 @@ contract MarketRegistry is Governed, Iupgradable {
       marketUtility = IMarketUtility(_generateProxy(_marketUtility));
       marketUtility.initialize(_configParams, _defaultAddress);
       marketInitiater = _defaultAddress;
+    }
+    
+    /**
+    * @dev Creates the new market
+    * @param _marketType The type of the market.
+    * @param _marketCurrencyIndex the index of market currency.
+    */
+    function createMarket(uint256 _marketType) public payable{
+      address penultimateMarket = marketCreationData[_marketType][_marketCurrencyIndex].penultimateMarket;
+      if(penultimateMarket != address(0)) {
+        IMarket(penultimateMarket).settleMarket();
+      }
+      if(marketCreationData[_marketType][_marketCurrencyIndex].marketAddress != address(0)) {
+        (,,,,,,,, uint _status) = getMarketDetails(marketCreationData[_marketType][_marketCurrencyIndex].marketAddress);
+        require(_status >= uint(IMarket.PredictionStatus.InSettlement));
+      }
+      (uint8 _roundOfToNearest, bytes32 _currencyName, address _priceFeed) = IMarket(marketCurrencies[_marketCurrencyIndex].marketImplementation).getMarketFeedData();
+      marketUtility.update();
+      uint64 _marketStartTime = calculateStartTimeForMarket(_marketType, _marketCurrencyIndex);
+      uint64 _optionRangePerc = marketTypes[_marketType].optionRangePerc;
+      uint currentPrice = marketUtility.getAssetPriceUSD(_priceFeed);
+      _optionRangePerc = uint64(currentPrice.mul(_optionRangePerc.div(2)).div(10000));
+      uint64 _decimals = marketCurrencies[_marketCurrencyIndex].decimals;
+      uint64 _minValue = uint64((ceil(currentPrice.sub(_optionRangePerc).div(_roundOfToNearest), 10**_decimals)).mul(_roundOfToNearest));
+      uint64 _maxValue = uint64((ceil(currentPrice.add(_optionRangePerc).div(_roundOfToNearest), 10**_decimals)).mul(_roundOfToNearest));
+      _createMarket(_marketType, _marketCurrencyIndex, _minValue, _maxValue, _marketStartTime, _currencyName);
+      userData[msg.sender].marketsCreated++;
+    }
+
+    /**
+    * @dev Creates the new market.
+    * @param _marketType The type of the market.
+    * @param _marketCurrencyIndex the index of market currency.
+    */
+    function _createMarket(uint256 _marketType, uint256 _marketCurrencyIndex, uint64 _minValue, uint64 _maxValue, uint64 _marketStartTime, bytes32 _currencyName) internal {
+      require(!marketCreationPaused);
+      MarketTypeData memory _marketTypeData = marketTypes[_marketType];
+      address payable _market = _generateProxy(marketCurrencies[_marketCurrencyIndex].marketImplementation);
+      marketData[_market].isMarket = true;
+      IMarket(_market).initiate(_marketStartTime, _marketTypeData.predictionTime, _minValue, _maxValue);
+      emit MarketQuestion(_market, _currencyName, _marketType, _marketStartTime);
+      (marketCreationData[_marketType][_marketCurrencyIndex].penultimateMarket, marketCreationData[_marketType][_marketCurrencyIndex].marketAddress) =
+       (marketCreationData[_marketType][_marketCurrencyIndex].marketAddress, _market);
     }
 }
