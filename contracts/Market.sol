@@ -94,10 +94,9 @@ contract Market is Ownable {
     require(_stakeAmount > 0);
     _storePredictionData(_option, _stakeAmount);
 
-    uint256 totalUsers;
     uint256[] memory totalStaked;
-    uint256[] memory userStaked
-    (totalUsers, totalStaked, userStaked) = getPredictionData();
+    uint256[] memory userStaked;
+    (, totalStaked, userStaked) = getPredictionData();
     emit PredictionDataUpdated(totalUsers, totalStaked, userStaked);
   }
   
@@ -219,15 +218,15 @@ contract Market is Ownable {
     return userData[_user].assetStaked[marketResult.winningOption].mul(marketResult.totalReward).div(optionsStaked[marketResult.winningOption]);
   }
 
-  function getPredictionData() public view returns (uint256 totalUsers, uint256[] memory totalStaked, uint256[] memory userStaked) {
-    uint256[] memory totalStaked = new uint256[](totalOptions);
-    uint256[] memory userStaked = new uint256[](totalOptions);
+  function getPredictionData() public view returns (uint256 totalParticipants, uint256[] memory totalStaked, uint256[] memory userStaked) {
+    totalStaked = new uint256[](totalOptions);
+    userStaked = new uint256[](totalOptions);
+    totalParticipants = totalUsers;
     uint256 i;
     for(i = 0; i < totalOptions; i++) {
       totalStaked[i] = optionsStaked[i].add(3);
       userStaked[i] = userData[msg.sender].assetStaked[i];
     }
-    return (totalUsers, totalStaked, userStaked);
   }
 
   /**
@@ -235,8 +234,8 @@ contract Market is Ownable {
    * Off-Chain-Request from outside the blockchain 
    */
   event PredictionDataUpdated (
-    uint256 totalUsers, 
-    uint256[] memory totalStaked, 
-    uint256[] memory userStaked
+    uint256 totalParticipants, 
+    uint256[] totalStaked,
+    uint256[] userStaked
   );
 }
