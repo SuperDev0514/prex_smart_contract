@@ -23,6 +23,8 @@
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
+require('dotenv').config();
+const HDWalletProvider = require('truffle-hdwallet-provider');
 
 module.exports = {
   /**
@@ -36,6 +38,15 @@ module.exports = {
    */
 
   networks: {
+    kovan: {
+       provider: function() { 
+        return new HDWalletProvider(process.env.MNEMONIC, process.env.WEB3_PROVIDER_ADDRESS);
+       },
+       network_id: 42,
+       gas: process.env.GAS,
+       gasPrice: process.env.GAS_PRICE,
+       skipDryRun: true
+   }
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache-cli, geth or parity) in a separate terminal
@@ -82,15 +93,15 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      // version: "0.5.1",    // Fetch exact version from solc-bin (default: truffle's version)
-      // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
-      //  evmVersion: "byzantium"
-      // }
+      version: "0.5.7",    // Fetch exact version from solc-bin (default: truffle's version)
+      //docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
+      settings: {          // See the solidity docs for advice about optimization and evmVersion
+       optimizer: {
+         enabled: false,
+         runs: 200
+       },
+       evmVersion: "byzantium"
+      }
     }
   }
 };

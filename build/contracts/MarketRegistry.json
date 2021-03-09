@@ -1,0 +1,1459 @@
+{
+  "contractName": "MarketRegistry",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "renounceOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "isOwner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "name": "previousOwner",
+          "type": "address"
+        },
+        {
+          "indexed": true,
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "OwnershipTransferred",
+      "type": "event"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "registerMarket",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getCurrentMarket",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"registerMarket\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"renounceOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurrentMarket\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"isOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"transferOwnership\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"name\":\"previousOwner\",\"type\":\"address\"},{\"indexed\":true,\"name\":\"newOwner\",\"type\":\"address\"}],\"name\":\"OwnershipTransferred\",\"type\":\"event\"}],\"devdoc\":{\"methods\":{\"isOwner()\":{\"details\":\"Returns true if the caller is the current owner.\\r\"},\"owner()\":{\"details\":\"Returns the address of the current owner.\\r\"},\"registerMarket()\":{\"details\":\"Register the new market\\r\"},\"renounceOwnership()\":{\"details\":\"Leaves the contract without owner. It will not be possible to call\\r `onlyOwner` functions anymore. Can only be called by the current owner.\\r      * > Note: Renouncing ownership will leave the contract without an owner,\\r thereby removing any functionality that is only available to the owner.\\r\"},\"transferOwnership(address)\":{\"details\":\"Transfers ownership of the contract to a new account (`newOwner`).\\r Can only be called by the current owner.\\r\"}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/MarketRegistry.sol\":\"MarketRegistry\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/MarketRegistry.sol\":{\"keccak256\":\"0x37c8c9ad4395003f620958e2b42114ff1e229a2c24c054541ad4cbc042ff93dc\",\"urls\":[\"bzzr://4e83cecbb5798060b5d9ce3b5611c84f060340916b2e8850fec72524d54a5cb3\"]},\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/external/openzeppelin-solidity/math/SafeMath.sol\":{\"keccak256\":\"0xddc216f60886b82d358e72201c8fa8fa70d8c5fdaee99afd56e78f7a4e82314e\",\"urls\":[\"bzzr://4009da514130ab37290d29e0b799e8938d4f91946d35475501e3611df8f38420\"]},\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/external/openzeppelin-solidity/ownership/Ownable.sol\":{\"keccak256\":\"0x8fdc9676abc850a5b1d8435bcc7f78d2bdb9dcb1e7c88587a924824b7a9b7c27\",\"urls\":[\"bzzr://71841a2170f0f7bafd845bd17f288cdf27f2dc66feec88393b0acf9776e20229\"]},\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarket.sol\":{\"keccak256\":\"0x89b59e6db8d0f40680d978bcd927183d7abfb8542c014d5b2adffaa39dffb01a\",\"urls\":[\"bzzr://3fdfb668a4e5fa07d598e1f5f1e7ed76fdcd564d2cbbeef3e5dd8fb3d87406b4\"]},\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IToken.sol\":{\"keccak256\":\"0x71f40dadd4718dea24102d1deb198934a0ae979146e9991da7e4919be7e92934\",\"urls\":[\"bzzr://dbf39f2cc2e28a498769cb9bc007587724a13eeeaa465910eaafeb274af0ba5c\"]}},\"version\":1}",
+  "bytecode": "0x6080604052336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16600073ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a36106bb806100cf6000396000f3fe608060405260043610610072576000357c0100000000000000000000000000000000000000000000000000000000900480630120883714610077578063715018a61461008157806380821c37146100985780638da5cb5b146100ef5780638f32d59b14610146578063f2fde38b14610175575b600080fd5b61007f6101c6565b005b34801561008d57600080fd5b5061009661022e565b005b3480156100a457600080fd5b506100ad610367565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100fb57600080fd5b5061010461041f565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561015257600080fd5b5061015b610448565b604051808215151515815260200191505060405180910390f35b34801561018157600080fd5b506101c46004803603602081101561019857600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061049f565b005b3360016000600254815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600260008154809291906001019190505550565b610236610448565b6102a8576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260208152602001807f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657281525060200191505060405180910390fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060025414156103e1576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260098152602001807f4e6f206d61726b6574000000000000000000000000000000000000000000000081525060200191505060405180910390fd5b60016000600160025403815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b6104a7610448565b610519576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260208152602001807f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657281525060200191505060405180910390fd5b61052281610525565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614156105ab576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602681526020018061066a6026913960400191505060405180910390fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f2061646472657373a165627a7a723058206ec826dc29a82fbaecfb999d25e571a53d63175f5d47a2293a7c9271e5bff95e0029",
+  "deployedBytecode": "0x608060405260043610610072576000357c0100000000000000000000000000000000000000000000000000000000900480630120883714610077578063715018a61461008157806380821c37146100985780638da5cb5b146100ef5780638f32d59b14610146578063f2fde38b14610175575b600080fd5b61007f6101c6565b005b34801561008d57600080fd5b5061009661022e565b005b3480156100a457600080fd5b506100ad610367565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100fb57600080fd5b5061010461041f565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801561015257600080fd5b5061015b610448565b604051808215151515815260200191505060405180910390f35b34801561018157600080fd5b506101c46004803603602081101561019857600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff16906020019092919050505061049f565b005b3360016000600254815260200190815260200160002060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550600260008154809291906001019190505550565b610236610448565b6102a8576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260208152602001807f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657281525060200191505060405180910390fd5b600073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a360008060006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550565b60008060025414156103e1576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260098152602001807f4e6f206d61726b6574000000000000000000000000000000000000000000000081525060200191505060405180910390fd5b60016000600160025403815260200190815260200160002060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16905090565b60008060009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff163373ffffffffffffffffffffffffffffffffffffffff1614905090565b6104a7610448565b610519576040517f08c379a00000000000000000000000000000000000000000000000000000000081526004018080602001828103825260208152602001807f4f776e61626c653a2063616c6c6572206973206e6f7420746865206f776e657281525060200191505060405180910390fd5b61052281610525565b50565b600073ffffffffffffffffffffffffffffffffffffffff168173ffffffffffffffffffffffffffffffffffffffff1614156105ab576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040180806020018281038252602681526020018061066a6026913960400191505060405180910390fd5b8073ffffffffffffffffffffffffffffffffffffffff166000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff167f8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e060405160405180910390a3806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055505056fe4f776e61626c653a206e6577206f776e657220697320746865207a65726f2061646472657373a165627a7a723058206ec826dc29a82fbaecfb999d25e571a53d63175f5d47a2293a7c9271e5bff95e0029",
+  "sourceMap": "229:456:1:-;;;686:10:7;677:6;;:19;;;;;;;;;;;;;;;;;;745:6;;;;;;;;;;;712:40;;741:1;712:40;;;;;;;;;;;;229:456:1;;;;;;",
+  "deployedSourceMap": "229:456:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;409:109;;;:::i;:::-;;1652:140:7;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1652:140:7;;;:::i;:::-;;526:148:1;;8:9:-1;5:2;;;30:1;27;20:12;5:2;526:148:1;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;841:79:7;;8:9:-1;5:2;;;30:1;27;20:12;5:2;841:79:7;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1207:92;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1207:92:7;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;1947:109;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1947:109:7;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;1947:109:7;;;;;;;;;;;;;;;;;;;:::i;:::-;;409::1;481:10;457:7;:21;465:12;;457:21;;;;;;;;;;;;:34;;;;;;;;;;;;;;;;;;498:12;;:14;;;;;;;;;;;;;409:109::o;1652:140:7:-;1053:9;:7;:9::i;:::-;1045:54;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1751:1;1714:40;;1735:6;;;;;;;;;;;1714:40;;;;;;;;;;;;1782:1;1765:6;;:19;;;;;;;;;;;;;;;;;;1652:140::o;526:148:1:-;574:7;614:1;598:12;;:17;;590:39;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;643:7;:25;666:1;651:12;;:16;643:25;;;;;;;;;;;;;;;;;;;;;636:32;;526:148;:::o;841:79:7:-;879:7;906:6;;;;;;;;;;;899:13;;841:79;:::o;1207:92::-;1247:4;1285:6;;;;;;;;;;;1271:20;;:10;:20;;;1264:27;;1207:92;:::o;1947:109::-;1053:9;:7;:9::i;:::-;1045:54;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2020:28;2039:8;2020:18;:28::i;:::-;1947:109;:::o;2162:229::-;2256:1;2236:22;;:8;:22;;;;2228:73;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2346:8;2317:38;;2338:6;;;;;;;;;;;2317:38;;;;;;;;;;;;2375:8;2366:6;;:17;;;;;;;;;;;;;;;;;;2162:229;:::o",
+  "source": "\r\npragma solidity 0.5.7;\r\n\r\nimport \"./external/openzeppelin-solidity/math/SafeMath.sol\";\r\nimport \"./interfaces/IToken.sol\";\r\nimport \"./interfaces/IMarket.sol\";\r\nimport \"./external/openzeppelin-solidity/ownership/Ownable.sol\";\r\n\r\ncontract MarketRegistry is Ownable {\r\n\r\n  using SafeMath for *; \r\n\r\n  mapping(uint => address) markets;\r\n  uint totalMarkets;\r\n  \r\n  /**\r\n  * @dev Register the new market\r\n  */\r\n  function registerMarket() public payable {\r\n    markets[totalMarkets] = msg.sender;\r\n    totalMarkets++;\r\n  }\r\n\r\n\r\n  function getCurrentMarket() public view returns(address) {\r\n    require(totalMarkets != 0, \"No market\");\r\n    return markets[totalMarkets - 1];\r\n  }\r\n\r\n    \r\n}",
+  "sourcePath": "E:/work/blockchain/prex/work/prex-smart-contracts/contracts/MarketRegistry.sol",
+  "ast": {
+    "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/MarketRegistry.sol",
+    "exportedSymbols": {
+      "MarketRegistry": [
+        709
+      ]
+    },
+    "id": 710,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 661,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".7"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "2:22:1"
+      },
+      {
+        "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/external/openzeppelin-solidity/math/SafeMath.sol",
+        "file": "./external/openzeppelin-solidity/math/SafeMath.sol",
+        "id": 662,
+        "nodeType": "ImportDirective",
+        "scope": 710,
+        "sourceUnit": 1631,
+        "src": "28:60:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IToken.sol",
+        "file": "./interfaces/IToken.sol",
+        "id": 663,
+        "nodeType": "ImportDirective",
+        "scope": 710,
+        "sourceUnit": 10705,
+        "src": "90:33:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarket.sol",
+        "file": "./interfaces/IMarket.sol",
+        "id": 664,
+        "nodeType": "ImportDirective",
+        "scope": 710,
+        "sourceUnit": 10622,
+        "src": "125:34:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/external/openzeppelin-solidity/ownership/Ownable.sol",
+        "file": "./external/openzeppelin-solidity/ownership/Ownable.sol",
+        "id": 665,
+        "nodeType": "ImportDirective",
+        "scope": 710,
+        "sourceUnit": 1742,
+        "src": "161:64:1",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "baseContracts": [
+          {
+            "arguments": null,
+            "baseName": {
+              "contractScope": null,
+              "id": 666,
+              "name": "Ownable",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1741,
+              "src": "256:7:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_Ownable_$1741",
+                "typeString": "contract Ownable"
+              }
+            },
+            "id": 667,
+            "nodeType": "InheritanceSpecifier",
+            "src": "256:7:1"
+          }
+        ],
+        "contractDependencies": [
+          1741
+        ],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 709,
+        "linearizedBaseContracts": [
+          709,
+          1741
+        ],
+        "name": "MarketRegistry",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "id": 669,
+            "libraryName": {
+              "contractScope": null,
+              "id": 668,
+              "name": "SafeMath",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 1156,
+              "src": "277:8:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_SafeMath_$1156",
+                "typeString": "library SafeMath"
+              }
+            },
+            "nodeType": "UsingForDirective",
+            "src": "271:21:1",
+            "typeName": null
+          },
+          {
+            "constant": false,
+            "id": 673,
+            "name": "markets",
+            "nodeType": "VariableDeclaration",
+            "scope": 709,
+            "src": "299:32:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
+              "typeString": "mapping(uint256 => address)"
+            },
+            "typeName": {
+              "id": 672,
+              "keyType": {
+                "id": 670,
+                "name": "uint",
+                "nodeType": "ElementaryTypeName",
+                "src": "307:4:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "299:24:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
+                "typeString": "mapping(uint256 => address)"
+              },
+              "valueType": {
+                "id": 671,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "315:7:1",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 675,
+            "name": "totalMarkets",
+            "nodeType": "VariableDeclaration",
+            "scope": 709,
+            "src": "336:17:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 674,
+              "name": "uint",
+              "nodeType": "ElementaryTypeName",
+              "src": "336:4:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 688,
+              "nodeType": "Block",
+              "src": "450:68:1",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 683,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 678,
+                        "name": "markets",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 673,
+                        "src": "457:7:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
+                          "typeString": "mapping(uint256 => address)"
+                        }
+                      },
+                      "id": 680,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "id": 679,
+                        "name": "totalMarkets",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 675,
+                        "src": "465:12:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "nodeType": "IndexAccess",
+                      "src": "457:21:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 681,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 10719,
+                        "src": "481:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 682,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "481:10:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address_payable",
+                        "typeString": "address payable"
+                      }
+                    },
+                    "src": "457:34:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 684,
+                  "nodeType": "ExpressionStatement",
+                  "src": "457:34:1"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 686,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "UnaryOperation",
+                    "operator": "++",
+                    "prefix": false,
+                    "src": "498:14:1",
+                    "subExpression": {
+                      "argumentTypes": null,
+                      "id": 685,
+                      "name": "totalMarkets",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 675,
+                      "src": "498:12:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 687,
+                  "nodeType": "ExpressionStatement",
+                  "src": "498:14:1"
+                }
+              ]
+            },
+            "documentation": "@dev Register the new market\r",
+            "id": 689,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerMarket",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 676,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "432:2:1"
+            },
+            "returnParameters": {
+              "id": 677,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "450:0:1"
+            },
+            "scope": 709,
+            "src": "409:109:1",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 707,
+              "nodeType": "Block",
+              "src": "583:91:1",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        "id": 697,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "id": 695,
+                          "name": "totalMarkets",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 675,
+                          "src": "598:12:1",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_uint256",
+                            "typeString": "uint256"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "!=",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "hexValue": "30",
+                          "id": 696,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "number",
+                          "lValueRequested": false,
+                          "nodeType": "Literal",
+                          "src": "614:1:1",
+                          "subdenomination": null,
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_rational_0_by_1",
+                            "typeString": "int_const 0"
+                          },
+                          "value": "0"
+                        },
+                        "src": "598:17:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "hexValue": "4e6f206d61726b6574",
+                        "id": 698,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "string",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "617:11:1",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_stringliteral_a209bda299c27e157f7ba960370ddf44b48ec366669b54a3ec8160be86a85c89",
+                          "typeString": "literal_string \"No market\""
+                        },
+                        "value": "No market"
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        },
+                        {
+                          "typeIdentifier": "t_stringliteral_a209bda299c27e157f7ba960370ddf44b48ec366669b54a3ec8160be86a85c89",
+                          "typeString": "literal_string \"No market\""
+                        }
+                      ],
+                      "id": 694,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        10722,
+                        10723
+                      ],
+                      "referencedDeclaration": 10723,
+                      "src": "590:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (bool,string memory) pure"
+                      }
+                    },
+                    "id": 699,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "590:39:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 700,
+                  "nodeType": "ExpressionStatement",
+                  "src": "590:39:1"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "baseExpression": {
+                      "argumentTypes": null,
+                      "id": 701,
+                      "name": "markets",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 673,
+                      "src": "643:7:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_mapping$_t_uint256_$_t_address_$",
+                        "typeString": "mapping(uint256 => address)"
+                      }
+                    },
+                    "id": 705,
+                    "indexExpression": {
+                      "argumentTypes": null,
+                      "commonType": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "id": 704,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "leftExpression": {
+                        "argumentTypes": null,
+                        "id": 702,
+                        "name": "totalMarkets",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 675,
+                        "src": "651:12:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "nodeType": "BinaryOperation",
+                      "operator": "-",
+                      "rightExpression": {
+                        "argumentTypes": null,
+                        "hexValue": "31",
+                        "id": 703,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": true,
+                        "kind": "number",
+                        "lValueRequested": false,
+                        "nodeType": "Literal",
+                        "src": "666:1:1",
+                        "subdenomination": null,
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_rational_1_by_1",
+                          "typeString": "int_const 1"
+                        },
+                        "value": "1"
+                      },
+                      "src": "651:16:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "nodeType": "IndexAccess",
+                    "src": "643:25:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "functionReturnParameters": 693,
+                  "id": 706,
+                  "nodeType": "Return",
+                  "src": "636:32:1"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 708,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCurrentMarket",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 690,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "551:2:1"
+            },
+            "returnParameters": {
+              "id": 693,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 692,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 708,
+                  "src": "574:7:1",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 691,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "574:7:1",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "573:9:1"
+            },
+            "scope": 709,
+            "src": "526:148:1",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 710,
+        "src": "229:456:1"
+      }
+    ],
+    "src": "2:683:1"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/MarketRegistry.sol",
+      "exportedSymbols": {
+        "MarketRegistry": [
+          709
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.5",
+            ".7"
+          ]
+        },
+        "id": 661,
+        "name": "PragmaDirective",
+        "src": "2:22:1"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1631,
+          "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/external/openzeppelin-solidity/math/SafeMath.sol",
+          "file": "./external/openzeppelin-solidity/math/SafeMath.sol",
+          "scope": 710,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 662,
+        "name": "ImportDirective",
+        "src": "28:60:1"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 10705,
+          "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IToken.sol",
+          "file": "./interfaces/IToken.sol",
+          "scope": 710,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 663,
+        "name": "ImportDirective",
+        "src": "90:33:1"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 10622,
+          "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarket.sol",
+          "file": "./interfaces/IMarket.sol",
+          "scope": 710,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 664,
+        "name": "ImportDirective",
+        "src": "125:34:1"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 1742,
+          "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/external/openzeppelin-solidity/ownership/Ownable.sol",
+          "file": "./external/openzeppelin-solidity/ownership/Ownable.sol",
+          "scope": 710,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 665,
+        "name": "ImportDirective",
+        "src": "161:64:1"
+      },
+      {
+        "attributes": {
+          "contractDependencies": [
+            1741
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            709,
+            1741
+          ],
+          "name": "MarketRegistry",
+          "scope": 710
+        },
+        "children": [
+          {
+            "attributes": {
+              "arguments": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "Ownable",
+                  "referencedDeclaration": 1741,
+                  "type": "contract Ownable"
+                },
+                "id": 666,
+                "name": "UserDefinedTypeName",
+                "src": "256:7:1"
+              }
+            ],
+            "id": 667,
+            "name": "InheritanceSpecifier",
+            "src": "256:7:1"
+          },
+          {
+            "attributes": {
+              "typeName": null
+            },
+            "children": [
+              {
+                "attributes": {
+                  "contractScope": null,
+                  "name": "SafeMath",
+                  "referencedDeclaration": 1156,
+                  "type": "library SafeMath"
+                },
+                "id": 668,
+                "name": "UserDefinedTypeName",
+                "src": "277:8:1"
+              }
+            ],
+            "id": 669,
+            "name": "UsingForDirective",
+            "src": "271:21:1"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "markets",
+              "scope": 709,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(uint256 => address)",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(uint256 => address)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "uint",
+                      "type": "uint256"
+                    },
+                    "id": 670,
+                    "name": "ElementaryTypeName",
+                    "src": "307:4:1"
+                  },
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "stateMutability": "nonpayable",
+                      "type": "address"
+                    },
+                    "id": 671,
+                    "name": "ElementaryTypeName",
+                    "src": "315:7:1"
+                  }
+                ],
+                "id": 672,
+                "name": "Mapping",
+                "src": "299:24:1"
+              }
+            ],
+            "id": 673,
+            "name": "VariableDeclaration",
+            "src": "299:32:1"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "totalMarkets",
+              "scope": 709,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "uint256",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "uint",
+                  "type": "uint256"
+                },
+                "id": 674,
+                "name": "ElementaryTypeName",
+                "src": "336:4:1"
+              }
+            ],
+            "id": 675,
+            "name": "VariableDeclaration",
+            "src": "336:17:1"
+          },
+          {
+            "attributes": {
+              "documentation": "@dev Register the new market\r",
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "registerMarket",
+              "scope": 709,
+              "stateMutability": "payable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 676,
+                "name": "ParameterList",
+                "src": "432:2:1"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 677,
+                "name": "ParameterList",
+                "src": "450:0:1"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "type": "address"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 673,
+                                  "type": "mapping(uint256 => address)",
+                                  "value": "markets"
+                                },
+                                "id": 678,
+                                "name": "Identifier",
+                                "src": "457:7:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 675,
+                                  "type": "uint256",
+                                  "value": "totalMarkets"
+                                },
+                                "id": 679,
+                                "name": "Identifier",
+                                "src": "465:12:1"
+                              }
+                            ],
+                            "id": 680,
+                            "name": "IndexAccess",
+                            "src": "457:21:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "sender",
+                              "referencedDeclaration": null,
+                              "type": "address payable"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 10719,
+                                  "type": "msg",
+                                  "value": "msg"
+                                },
+                                "id": 681,
+                                "name": "Identifier",
+                                "src": "481:3:1"
+                              }
+                            ],
+                            "id": 682,
+                            "name": "MemberAccess",
+                            "src": "481:10:1"
+                          }
+                        ],
+                        "id": 683,
+                        "name": "Assignment",
+                        "src": "457:34:1"
+                      }
+                    ],
+                    "id": 684,
+                    "name": "ExpressionStatement",
+                    "src": "457:34:1"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "++",
+                          "prefix": false,
+                          "type": "uint256"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 675,
+                              "type": "uint256",
+                              "value": "totalMarkets"
+                            },
+                            "id": 685,
+                            "name": "Identifier",
+                            "src": "498:12:1"
+                          }
+                        ],
+                        "id": 686,
+                        "name": "UnaryOperation",
+                        "src": "498:14:1"
+                      }
+                    ],
+                    "id": 687,
+                    "name": "ExpressionStatement",
+                    "src": "498:14:1"
+                  }
+                ],
+                "id": 688,
+                "name": "Block",
+                "src": "450:68:1"
+              }
+            ],
+            "id": 689,
+            "name": "FunctionDefinition",
+            "src": "409:109:1"
+          },
+          {
+            "attributes": {
+              "documentation": null,
+              "implemented": true,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getCurrentMarket",
+              "scope": 709,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 690,
+                "name": "ParameterList",
+                "src": "551:2:1"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 708,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 691,
+                        "name": "ElementaryTypeName",
+                        "src": "574:7:1"
+                      }
+                    ],
+                    "id": 692,
+                    "name": "VariableDeclaration",
+                    "src": "574:7:1"
+                  }
+                ],
+                "id": 693,
+                "name": "ParameterList",
+                "src": "573:9:1"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "tuple()",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                {
+                                  "typeIdentifier": "t_bool",
+                                  "typeString": "bool"
+                                },
+                                {
+                                  "typeIdentifier": "t_stringliteral_a209bda299c27e157f7ba960370ddf44b48ec366669b54a3ec8160be86a85c89",
+                                  "typeString": "literal_string \"No market\""
+                                }
+                              ],
+                              "overloadedDeclarations": [
+                                10722,
+                                10723
+                              ],
+                              "referencedDeclaration": 10723,
+                              "type": "function (bool,string memory) pure",
+                              "value": "require"
+                            },
+                            "id": 694,
+                            "name": "Identifier",
+                            "src": "590:7:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "!=",
+                              "type": "bool"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 675,
+                                  "type": "uint256",
+                                  "value": "totalMarkets"
+                                },
+                                "id": 695,
+                                "name": "Identifier",
+                                "src": "598:12:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "30",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 0",
+                                  "value": "0"
+                                },
+                                "id": 696,
+                                "name": "Literal",
+                                "src": "614:1:1"
+                              }
+                            ],
+                            "id": 697,
+                            "name": "BinaryOperation",
+                            "src": "598:17:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "hexvalue": "4e6f206d61726b6574",
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "lValueRequested": false,
+                              "subdenomination": null,
+                              "token": "string",
+                              "type": "literal_string \"No market\"",
+                              "value": "No market"
+                            },
+                            "id": 698,
+                            "name": "Literal",
+                            "src": "617:11:1"
+                          }
+                        ],
+                        "id": 699,
+                        "name": "FunctionCall",
+                        "src": "590:39:1"
+                      }
+                    ],
+                    "id": 700,
+                    "name": "ExpressionStatement",
+                    "src": "590:39:1"
+                  },
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 693
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 673,
+                              "type": "mapping(uint256 => address)",
+                              "value": "markets"
+                            },
+                            "id": 701,
+                            "name": "Identifier",
+                            "src": "643:7:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "commonType": {
+                                "typeIdentifier": "t_uint256",
+                                "typeString": "uint256"
+                              },
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "operator": "-",
+                              "type": "uint256"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 675,
+                                  "type": "uint256",
+                                  "value": "totalMarkets"
+                                },
+                                "id": 702,
+                                "name": "Identifier",
+                                "src": "651:12:1"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "hexvalue": "31",
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": true,
+                                  "lValueRequested": false,
+                                  "subdenomination": null,
+                                  "token": "number",
+                                  "type": "int_const 1",
+                                  "value": "1"
+                                },
+                                "id": 703,
+                                "name": "Literal",
+                                "src": "666:1:1"
+                              }
+                            ],
+                            "id": 704,
+                            "name": "BinaryOperation",
+                            "src": "651:16:1"
+                          }
+                        ],
+                        "id": 705,
+                        "name": "IndexAccess",
+                        "src": "643:25:1"
+                      }
+                    ],
+                    "id": 706,
+                    "name": "Return",
+                    "src": "636:32:1"
+                  }
+                ],
+                "id": 707,
+                "name": "Block",
+                "src": "583:91:1"
+              }
+            ],
+            "id": 708,
+            "name": "FunctionDefinition",
+            "src": "526:148:1"
+          }
+        ],
+        "id": 709,
+        "name": "ContractDefinition",
+        "src": "229:456:1"
+      }
+    ],
+    "id": 710,
+    "name": "SourceUnit",
+    "src": "2:683:1"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.7+commit.6da8b019.Emscripten.clang"
+  },
+  "networks": {
+    "42": {
+      "events": {
+        "0x8be0079c531659141344cd1fd0a4f28419497f9722a3daafe3b4186f6b6457e0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": true,
+              "name": "previousOwner",
+              "type": "address"
+            },
+            {
+              "indexed": true,
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "name": "OwnershipTransferred",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x6B58faB74766B165D3eFE94e0B0f4da2F19d2b8E",
+      "transactionHash": "0x2f10c173719d801c93ebf5af87e64bc7b7985a5917231a1b93f4310850356394"
+    }
+  },
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-03-09T09:27:46.408Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "methods": {
+      "isOwner()": {
+        "details": "Returns true if the caller is the current owner.\r"
+      },
+      "owner()": {
+        "details": "Returns the address of the current owner.\r"
+      },
+      "registerMarket()": {
+        "details": "Register the new market\r"
+      },
+      "renounceOwnership()": {
+        "details": "Leaves the contract without owner. It will not be possible to call\r `onlyOwner` functions anymore. Can only be called by the current owner.\r      * > Note: Renouncing ownership will leave the contract without an owner,\r thereby removing any functionality that is only available to the owner.\r"
+      },
+      "transferOwnership(address)": {
+        "details": "Transfers ownership of the contract to a new account (`newOwner`).\r Can only be called by the current owner.\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

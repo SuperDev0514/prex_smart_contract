@@ -1,0 +1,335 @@
+{
+  "contractName": "IMarketRegistry",
+  "abi": [
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "registerMarket",
+      "outputs": [],
+      "payable": true,
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getCurrentMarket",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"registerMarket\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurrentMarket\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"registerMarket()\":{\"details\":\"Register the new market\\r\"}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol\":\"IMarketRegistry\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol\":{\"keccak256\":\"0xe54ada4d3e03b7054bb5425c75636b4f4a199d67beed7fca8be8d96a518b2e59\",\"urls\":[\"bzzr://9f63e7c93903978b7b8ade5f7a3c790037c9525b79ffc3a93ae5e691ae905ef1\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "\r\npragma solidity 0.5.7;\r\n\r\ncontract IMarketRegistry {\r\n  \r\n  /**\r\n  * @dev Register the new market\r\n  */\r\n  function registerMarket() public payable;\r\n\r\n\r\n  function getCurrentMarket() public view returns(address);\r\n\r\n    \r\n}",
+  "sourcePath": "E:\\work\\blockchain\\prex\\work\\prex-smart-contracts\\contracts\\interfaces\\IMarketRegistry.sol",
+  "ast": {
+    "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol",
+    "exportedSymbols": {
+      "IMarketRegistry": [
+        10698
+      ]
+    },
+    "id": 10699,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 10689,
+        "literals": [
+          "solidity",
+          "0.5",
+          ".7"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "2:22:17"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 10698,
+        "linearizedBaseContracts": [
+          10698
+        ],
+        "name": "IMarketRegistry",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": "@dev Register the new market\r",
+            "id": 10692,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerMarket",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10690,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "132:2:17"
+            },
+            "returnParameters": {
+              "id": 10691,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "149:0:17"
+            },
+            "scope": 10698,
+            "src": "109:41:17",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 10697,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCurrentMarket",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10693,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "183:2:17"
+            },
+            "returnParameters": {
+              "id": 10696,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10695,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10697,
+                  "src": "206:7:17",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 10694,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "206:7:17",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "205:9:17"
+            },
+            "scope": 10698,
+            "src": "158:57:17",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 10699,
+        "src": "28:198:17"
+      }
+    ],
+    "src": "2:224:17"
+  },
+  "legacyAST": {
+    "attributes": {
+      "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol",
+      "exportedSymbols": {
+        "IMarketRegistry": [
+          10698
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "0.5",
+            ".7"
+          ]
+        },
+        "id": 10689,
+        "name": "PragmaDirective",
+        "src": "2:22:17"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            null
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": false,
+          "linearizedBaseContracts": [
+            10698
+          ],
+          "name": "IMarketRegistry",
+          "scope": 10699
+        },
+        "children": [
+          {
+            "attributes": {
+              "body": null,
+              "documentation": "@dev Register the new market\r",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "registerMarket",
+              "scope": 10698,
+              "stateMutability": "payable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 10690,
+                "name": "ParameterList",
+                "src": "132:2:17"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 10691,
+                "name": "ParameterList",
+                "src": "149:0:17"
+              }
+            ],
+            "id": 10692,
+            "name": "FunctionDefinition",
+            "src": "109:41:17"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": null,
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getCurrentMarket",
+              "scope": 10698,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 10693,
+                "name": "ParameterList",
+                "src": "183:2:17"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 10697,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "stateMutability": "nonpayable",
+                          "type": "address"
+                        },
+                        "id": 10694,
+                        "name": "ElementaryTypeName",
+                        "src": "206:7:17"
+                      }
+                    ],
+                    "id": 10695,
+                    "name": "VariableDeclaration",
+                    "src": "206:7:17"
+                  }
+                ],
+                "id": 10696,
+                "name": "ParameterList",
+                "src": "205:9:17"
+              }
+            ],
+            "id": 10697,
+            "name": "FunctionDefinition",
+            "src": "158:57:17"
+          }
+        ],
+        "id": 10698,
+        "name": "ContractDefinition",
+        "src": "28:198:17"
+      }
+    ],
+    "id": 10699,
+    "name": "SourceUnit",
+    "src": "2:224:17"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.7+commit.6da8b019.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.3.3",
+  "updatedAt": "2021-03-09T09:25:07.284Z",
+  "devdoc": {
+    "methods": {
+      "registerMarket()": {
+        "details": "Register the new market\r"
+      }
+    }
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
