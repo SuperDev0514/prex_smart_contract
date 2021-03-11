@@ -45,7 +45,8 @@ module.exports = {
        network_id: 42,
        gas: process.env.GAS,
        gasPrice: process.env.GAS_PRICE,
-       skipDryRun: true
+       skipDryRun: true,
+       networkCheckTimeout: 10000
    }
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.

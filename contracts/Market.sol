@@ -12,9 +12,9 @@ contract Market is Ownable {
   using SafeMath for *;
 
   enum Option {
-    Bearish,
+    Bullish,
     Neutral,
-    Bullish
+    Bearish
   }
   
   struct MarketData {
@@ -23,11 +23,14 @@ contract Market is Ownable {
     uint256 endTime;
     uint256 neutralMinValue;
     uint256 neutralMaxValue;
+    uint256 neutralRange;
   }
 
   struct MarketResult {
     uint256 winningOption;
     uint256 totalReward;
+    uint256 startPrice;
+    uint256 endPrice;
   }
 
   struct UserData {
@@ -61,17 +64,16 @@ contract Market is Ownable {
     * @dev Initialize the market.
     * @param _startTime The time at which market will create.
     * @param _duration The time duration of market.
-    * @param _minValue The minimum value of neutral option range.
-    * @param _maxValue The maximum value of neutral option range.
+    * @param _neutralRange The neutral option range.
     */
-  function initiate(uint256 _startTime, uint256 _duration, uint256 _minValue, uint256 _maxValue, address registry) public payable onlyOwner {
+  function initiate(uint256 _startTime, uint256 _duration, uint256 _neutralRange, address registry) public payable onlyOwner {
     require(marketData.startTime == 0, "Already initialized");
     require(_startTime.add(_duration) > now);
     marketData.startTime = _startTime;
     marketData.predictionTime = _startTime.add(_duration);
     marketData.endTime = marketData.predictionTime.add(_duration);
-    marketData.neutralMinValue = _minValue;
-    marketData.neutralMaxValue = _maxValue;
+    marketData.neutralRange = _neutralRange;
+    marketResult.winningOption = totalOptions;
     marketRegistry = IMarketRegistry(registry);
     marketRegistry.registerMarket();
   }
@@ -82,22 +84,21 @@ contract Market is Ownable {
     * @param _option The option on which user placed prediction.
     */
   function placePrediction(uint256 _stakeAmount, uint256 _option) public payable {
-    require(_option <= totalOptions && _stakeAmount >= MIN_STAKE_AMOUNT);
-    require(now >= marketData.startTime && now <= marketData.predictionTime);
+    require(_option < totalOptions, "Option is invalid");
+    require(_stakeAmount >= MIN_STAKE_AMOUNT, "Too small amount");
+    require(now >= marketData.startTime, "Market has not started yet");
+    require(now <= marketData.predictionTime, "Market prediction has expried.");
 
-    require(msg.value == 0);
+    require(msg.value == 0, "Not allowed transaction value.");
     assetToken.transferFrom(msg.sender, address(this), _stakeAmount);
     uint256 commissionAmount = _calculatePercentage(COMMISSION_PERCENTAGE, _stakeAmount, 10000);
     totalCommissionAmount = totalCommissionAmount.add(commissionAmount);
     _stakeAmount = _stakeAmount.sub(commissionAmount);
 
-    require(_stakeAmount > 0);
+    require(_stakeAmount > 0, "Amount is zero");
     _storePredictionData(_option, _stakeAmount);
 
-    uint256[] memory totalStaked;
-    uint256[] memory userStaked;
-    (, totalStaked, userStaked) = getPredictionData();
-    emit PredictionDataUpdated(totalUsers, totalStaked, userStaked);
+    emit PredictionDataUpdated();
   }
   
   /**
@@ -140,6 +141,10 @@ contract Market is Ownable {
     */
   function _storePredictionData(uint256 _option, uint256 _stakeAmount) internal {
     if (userData[msg.sender].available == false) {
+      delete userData[msg.sender];
+      for (uint256 i = 0; i < totalOptions; i++) {
+        userData[msg.sender].assetStaked[i] = 0;
+      }
       userData[msg.sender].available = true;
       users[totalUsers] = msg.sender;
       totalUsers++;
@@ -152,25 +157,24 @@ contract Market is Ownable {
     * @dev Settle the market, setting the winning option
     */
   function endMarket() external onlyOwner {
-    require(marketData.endTime < now);
-    uint256 _value = getEndingPrice();
-    _postResult(_value);
+    require(marketData.endTime < now, "Market has not ended yet.");
+    marketResult.endPrice = getPrice(marketData.endTime);
+    _postResult(marketResult.endPrice);
   }
 
   /**
     * @dev Get price of provided feed address
     **/
-  function getEndingPrice() public view returns (uint256) {
-    require(marketData.endTime < now);
+  function getPrice(uint256 _time) public view returns (uint256) {
+    require(_time < now);
     int256 currentRoundAnswer;
     uint80 currentRoundId;
     uint256 currentRoundTime;
-    uint256 endTime = marketData.endTime;
     (currentRoundId, currentRoundAnswer, , currentRoundTime, )= IChainLinkOracle(PRICE_FEED_ADDRESS).latestRoundData();
-    while(currentRoundTime > endTime) {
+    while(currentRoundTime > _time) {
       currentRoundId--;
       (currentRoundId, currentRoundAnswer, , currentRoundTime, )= IChainLinkOracle(PRICE_FEED_ADDRESS).getRoundData(currentRoundId);
-      if(currentRoundTime <= endTime) {
+      if(currentRoundTime <= _time) {
         break;
       }
     }
@@ -224,18 +228,55 @@ contract Market is Ownable {
     totalParticipants = totalUsers;
     uint256 i;
     for(i = 0; i < totalOptions; i++) {
-      totalStaked[i] = optionsStaked[i].add(3);
+      totalStaked[i] = optionsStaked[i];
       userStaked[i] = userData[msg.sender].assetStaked[i];
     }
   }
 
+  function getCurrentTime() public view returns (uint256) {
+    return now;
+  }
+
   /**
-   * Bird Standard API Request
-   * Off-Chain-Request from outside the blockchain 
-   */
-  event PredictionDataUpdated (
-    uint256 totalParticipants, 
-    uint256[] totalStaked,
-    uint256[] userStaked
+    * @dev Start market
+    */
+  function startMarket() public onlyOwner returns (uint256 startPrice, uint256 neutralMinValue, uint256 neutralMaxValue) {
+    require(marketResult.startPrice == 0, "Market already started");
+    require(marketData.startTime <= now, "Before start time");
+
+    marketResult.startPrice = getPrice(marketData.startTime);
+    marketData.neutralMinValue = marketResult.startPrice.sub(marketData.neutralRange);
+    marketData.neutralMaxValue = marketResult.startPrice.add(marketData.neutralRange);
+    emit MarketStarted(marketResult.startPrice, marketData.neutralMinValue, marketData.neutralMaxValue);
+    startPrice = marketResult.startPrice;
+    neutralMinValue = marketData.neutralMinValue;
+    neutralMaxValue = marketData.neutralMaxValue;
+  }
+
+  /**
+    * @dev Clear market.
+    */
+  function clearMarket() public payable onlyOwner {
+    delete marketData;
+    delete marketResult;
+    delete totalUsers;
+    delete totalCommissionAmount;
+
+    for (uint256 i = 0; i < totalOptions; i++) {
+      optionsStaked[i] = 0;
+    }
+  }
+
+  event PredictionDataUpdated ();
+
+  event MarketStarted (
+    uint256 startPrice,
+    uint256 neutralMinValue,
+    uint256 neutralMaxValue
+  );
+
+  event MarketEnded (
+    uint256 endPrice,
+    uint256 winningOption,
   );
 }
