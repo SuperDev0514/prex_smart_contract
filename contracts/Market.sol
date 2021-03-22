@@ -37,6 +37,7 @@ contract Market is Ownable {
     mapping(uint256 => uint256) assetStaked;
     bool claimedReward;
     bool available;
+    uint256 returnAmount;
   }
     
   bytes32 public constant marketCurrency = "ETH/USDT";
@@ -66,7 +67,7 @@ contract Market is Ownable {
     * @param _duration The time duration of market.
     * @param _neutralRange The neutral option range.
     */
-  function initiate(uint256 _startTime, uint256 _duration, uint256 _neutralRange, address registry) public payable onlyOwner {
+  function initiate(uint256 _startTime, uint256 _duration, uint256 _neutralRange, address registry) external onlyOwner {
     require(marketData.startTime == 0, "Already initialized");
     require(_startTime.add(_duration) > now);
     marketData.startTime = _startTime;
@@ -76,6 +77,7 @@ contract Market is Ownable {
     marketResult.winningOption = totalOptions;
     marketRegistry = IMarketRegistry(registry);
     marketRegistry.registerMarket();
+    emit MarketCreated(marketData.startTime, marketData.predictionTime, marketData.endTime);
   }
 
   /**
@@ -83,7 +85,7 @@ contract Market is Ownable {
     * @param _stakeAmount The amount staked by user at the time of prediction.
     * @param _option The option on which user placed prediction.
     */
-  function placePrediction(uint256 _stakeAmount, uint256 _option) public payable {
+  function placePrediction(uint256 _stakeAmount, uint256 _option) external payable {
     require(_option < totalOptions, "Option is invalid");
     require(_stakeAmount >= MIN_STAKE_AMOUNT, "Too small amount");
     require(now >= marketData.startTime, "Market has not started yet");
@@ -93,12 +95,18 @@ contract Market is Ownable {
     assetToken.transferFrom(msg.sender, address(this), _stakeAmount);
     uint256 commissionAmount = _calculatePercentage(COMMISSION_PERCENTAGE, _stakeAmount, 10000);
     totalCommissionAmount = totalCommissionAmount.add(commissionAmount);
-    _stakeAmount = _stakeAmount.sub(commissionAmount);
+    uint256 realAmount = _stakeAmount;
+    realAmount = realAmount.sub(commissionAmount);
 
-    require(_stakeAmount > 0, "Amount is zero");
-    _storePredictionData(_option, _stakeAmount);
+    require(realAmount > 0, "Amount is zero");
+    _storePredictionData(_option, realAmount);
 
-    emit PredictionDataUpdated();
+    uint256[] memory totalStaked = new uint256[](totalOptions);
+    for (uint256 i = 0; i < totalOptions; i++) {
+      totalStaked[i] = optionsStaked[i];
+    }
+
+    emit PredictionDataUpdated(totalUsers, totalStaked);
   }
   
   /**
@@ -120,9 +128,7 @@ contract Market is Ownable {
     }
     if (optionsStaked[marketResult.winningOption] > 0) {
       for(i = 0; i < totalOptions; i++){
-        if(i != marketResult.winningOption) {
-          marketResult.totalReward = marketResult.totalReward.add(optionsStaked[i]);
-        }
+        marketResult.totalReward = marketResult.totalReward.add(optionsStaked[i]);
       }
     }
     for (i = 0; i < totalUsers; i++) {
@@ -160,6 +166,7 @@ contract Market is Ownable {
     require(marketData.endTime < now, "Market has not ended yet.");
     marketResult.endPrice = getPrice(marketData.endTime);
     _postResult(marketResult.endPrice);
+    emit MarketEnded(marketResult.endPrice, marketResult.winningOption);
   }
 
   /**
@@ -193,7 +200,10 @@ contract Market is Ownable {
     }
     userData[_user].claimedReward = true;
     uint256 _returnAmount = getReturn(_user);
-    _transferAsset(ASSET_ADDRESS, address(uint160(_user)), _returnAmount);
+    if (_returnAmount > 0) {
+      _transferAsset(ASSET_ADDRESS, address(uint160(_user)), _returnAmount);
+    }
+    userData[_user].returnAmount = _returnAmount;
     return 2;
   }
 
@@ -219,7 +229,12 @@ contract Market is Ownable {
   * @return returnAmount uint256 memory representing the return amount.
   */
   function getReturn(address _user) public view returns (uint256) {
-    return userData[_user].assetStaked[marketResult.winningOption].mul(marketResult.totalReward).div(optionsStaked[marketResult.winningOption]);
+    if (optionsStaked[marketResult.winningOption] == 0) {
+      return 0;
+    }
+    else {
+      return userData[_user].assetStaked[marketResult.winningOption].mul(marketResult.totalReward).div(optionsStaked[marketResult.winningOption]);
+    }
   }
 
   function getPredictionData() public view returns (uint256 totalParticipants, uint256[] memory totalStaked, uint256[] memory userStaked) {
@@ -229,7 +244,8 @@ contract Market is Ownable {
     uint256 i;
     for(i = 0; i < totalOptions; i++) {
       totalStaked[i] = optionsStaked[i];
-      userStaked[i] = userData[msg.sender].assetStaked[i];
+      if (userData[msg.sender].available)
+        userStaked[i] = userData[msg.sender].assetStaked[i];
     }
   }
 
@@ -240,7 +256,7 @@ contract Market is Ownable {
   /**
     * @dev Start market
     */
-  function startMarket() public onlyOwner returns (uint256 startPrice, uint256 neutralMinValue, uint256 neutralMaxValue) {
+  function startMarket() external onlyOwner returns (uint256 startPrice, uint256 neutralMinValue, uint256 neutralMaxValue) {
     require(marketResult.startPrice == 0, "Market already started");
     require(marketData.startTime <= now, "Before start time");
 
@@ -257,6 +273,9 @@ contract Market is Ownable {
     * @dev Clear market.
     */
   function clearMarket() public payable onlyOwner {
+    for (uint256 i = 0; i < totalUsers; i++) {
+      userData[users[i]].available = false;
+    }
     delete marketData;
     delete marketResult;
     delete totalUsers;
@@ -267,7 +286,11 @@ contract Market is Ownable {
     }
   }
 
-  event PredictionDataUpdated ();
+  event MarketCreated (
+    uint256 startTime,
+    uint256 predictionTime,
+    uint256 endTime
+  );
 
   event MarketStarted (
     uint256 startPrice,
@@ -275,8 +298,13 @@ contract Market is Ownable {
     uint256 neutralMaxValue
   );
 
+  event PredictionDataUpdated (
+    uint256 totalParticipants,
+    uint256[] totalStaked
+  );
+
   event MarketEnded (
     uint256 endPrice,
-    uint256 winningOption,
+    uint256 winningOption
   );
 }

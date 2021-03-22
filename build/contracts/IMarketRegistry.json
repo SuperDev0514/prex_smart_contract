@@ -36,14 +36,14 @@
     "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol",
     "exportedSymbols": {
       "IMarketRegistry": [
-        10908
+        10991
       ]
     },
-    "id": 10909,
+    "id": 10992,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 10899,
+        "id": 10982,
         "literals": [
           "solidity",
           "0.5",
@@ -58,9 +58,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 10908,
+        "id": 10991,
         "linearizedBaseContracts": [
-          10908
+          10991
         ],
         "name": "IMarketRegistry",
         "nodeType": "ContractDefinition",
@@ -68,25 +68,25 @@
           {
             "body": null,
             "documentation": "@dev Register the new market\r",
-            "id": 10902,
+            "id": 10985,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "registerMarket",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 10900,
+              "id": 10983,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "132:2:17"
             },
             "returnParameters": {
-              "id": 10901,
+              "id": 10984,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "149:0:17"
             },
-            "scope": 10908,
+            "scope": 10991,
             "src": "109:41:17",
             "stateMutability": "payable",
             "superFunction": null,
@@ -95,28 +95,28 @@
           {
             "body": null,
             "documentation": null,
-            "id": 10907,
+            "id": 10990,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getCurrentMarket",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 10903,
+              "id": 10986,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "183:2:17"
             },
             "returnParameters": {
-              "id": 10906,
+              "id": 10989,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 10905,
+                  "id": 10988,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 10907,
+                  "scope": 10990,
                   "src": "206:7:17",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -125,7 +125,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 10904,
+                    "id": 10987,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "206:7:17",
@@ -141,14 +141,14 @@
               ],
               "src": "205:9:17"
             },
-            "scope": 10908,
+            "scope": 10991,
             "src": "158:57:17",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 10909,
+        "scope": 10992,
         "src": "28:198:17"
       }
     ],
@@ -159,7 +159,7 @@
       "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol",
       "exportedSymbols": {
         "IMarketRegistry": [
-          10908
+          10991
         ]
       }
     },
@@ -172,7 +172,7 @@
             ".7"
           ]
         },
-        "id": 10899,
+        "id": 10982,
         "name": "PragmaDirective",
         "src": "2:22:17"
       },
@@ -188,10 +188,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            10908
+            10991
           ],
           "name": "IMarketRegistry",
-          "scope": 10909
+          "scope": 10992
         },
         "children": [
           {
@@ -205,7 +205,7 @@
                 null
               ],
               "name": "registerMarket",
-              "scope": 10908,
+              "scope": 10991,
               "stateMutability": "payable",
               "superFunction": null,
               "visibility": "public"
@@ -218,7 +218,7 @@
                   ]
                 },
                 "children": [],
-                "id": 10900,
+                "id": 10983,
                 "name": "ParameterList",
                 "src": "132:2:17"
               },
@@ -229,12 +229,12 @@
                   ]
                 },
                 "children": [],
-                "id": 10901,
+                "id": 10984,
                 "name": "ParameterList",
                 "src": "149:0:17"
               }
             ],
-            "id": 10902,
+            "id": 10985,
             "name": "FunctionDefinition",
             "src": "109:41:17"
           },
@@ -249,7 +249,7 @@
                 null
               ],
               "name": "getCurrentMarket",
-              "scope": 10908,
+              "scope": 10991,
               "stateMutability": "view",
               "superFunction": null,
               "visibility": "public"
@@ -262,7 +262,7 @@
                   ]
                 },
                 "children": [],
-                "id": 10903,
+                "id": 10986,
                 "name": "ParameterList",
                 "src": "183:2:17"
               },
@@ -272,7 +272,7 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 10907,
+                      "scope": 10990,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -286,32 +286,32 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 10904,
+                        "id": 10987,
                         "name": "ElementaryTypeName",
                         "src": "206:7:17"
                       }
                     ],
-                    "id": 10905,
+                    "id": 10988,
                     "name": "VariableDeclaration",
                     "src": "206:7:17"
                   }
                 ],
-                "id": 10906,
+                "id": 10989,
                 "name": "ParameterList",
                 "src": "205:9:17"
               }
             ],
-            "id": 10907,
+            "id": 10990,
             "name": "FunctionDefinition",
             "src": "158:57:17"
           }
         ],
-        "id": 10908,
+        "id": 10991,
         "name": "ContractDefinition",
         "src": "28:198:17"
       }
     ],
-    "id": 10909,
+    "id": 10992,
     "name": "SourceUnit",
     "src": "2:224:17"
   },
@@ -321,7 +321,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-03-11T03:20:55.481Z",
+  "updatedAt": "2021-03-12T21:21:36.698Z",
   "devdoc": {
     "methods": {
       "registerMarket()": {

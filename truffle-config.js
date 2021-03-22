@@ -40,7 +40,7 @@ module.exports = {
   networks: {
     kovan: {
        provider: function() { 
-        return new HDWalletProvider(process.env.MNEMONIC, process.env.WEB3_PROVIDER_ADDRESS);
+        return new HDWalletProvider(process.env.MNEMONIC, process.env.WEB3_PROVIDER_ADDRESS, 3);
        },
        network_id: 42,
        gas: process.env.GAS,

@@ -4,6 +4,7 @@ const MarketRegistry = artifacts.require('MarketRegistry');
 
 module.exports = function(deployer, network, accounts){
   deployer.then(async () => {
+    console.log("Deploying from " + accounts[0]);
     let marketRegistry = await deployer.deploy(MarketRegistry);
     console.log("MarketRegistry is deployed at: " + marketRegistry.address);
     let market = await deployer.deploy(Market);
