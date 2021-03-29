@@ -8393,12 +8393,13 @@
         }
       },
       "links": {},
-      "address": "0xF1ed2ecCf8c9e419E85a61eA745f5368c5BB895F",
-      "transactionHash": "0x806bc092b13945ed22d297836ec6009840391c66b349eeebf209b99930b42b95"
+      "address": "0xd213e02ef8Afe7F01d336213276B50e887Ae17F7",
+      "transactionHash": "0xdc0ac161f1472ea0a3105330753cc5f520fec6eaaac7c1adff9d0f33e548dcad"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-03-29T09:20:05.083Z",
+  "updatedAt": "2021-03-29T09:28:36.399Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "getCurrentTime()": {

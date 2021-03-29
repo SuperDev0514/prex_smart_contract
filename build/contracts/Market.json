@@ -21434,12 +21434,13 @@
         }
       },
       "links": {},
-      "address": "0x917e2Bd9742cC77E0cf9d633f5675C83fB19AaCc",
-      "transactionHash": "0xc84931db599ced8bf9ad0771d89c0aadace5ed483503c0f098a052cc4005659e"
+      "address": "0xbd6cbfc4cf983D169cf42F188c607156b8E70314",
+      "transactionHash": "0x77594453509953817653d46cac5529f9713b15e684f3ba5fd5f9fd6f305774c3"
     }
   },
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-03-29T09:20:05.071Z",
+  "updatedAt": "2021-03-29T09:28:36.388Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "claimReturn(address)": {
