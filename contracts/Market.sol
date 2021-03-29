@@ -6,78 +6,89 @@ import "./external/openzeppelin-solidity/ownership/Ownable.sol";
 import "./external/openzeppelin-solidity/token/ERC20/IERC20.sol";
 import "./interfaces/IToken.sol";
 import "./interfaces/IMarketRegistry.sol";
-import "./interfaces/IChainLinkOracle.sol";
 
 contract Market is Ownable {
   using SafeMath for *;
 
-  enum Option {
-    Bullish,
-    Neutral,
-    Bearish
-  }
-  
-  struct MarketData {
-    uint256 startTime;
-    uint256 predictionTime;
-    uint256 endTime;
-    uint256 neutralMinValue;
-    uint256 neutralMaxValue;
-    uint256 neutralRange;
-  }
+  uint256 roundId;
 
-  struct MarketResult {
-    uint256 winningOption;
-    uint256 totalReward;
-    uint256 startPrice;
-    uint256 endPrice;
-  }
+  /* Market Creation Data */
+  uint256 startTime;
+  uint256 midTime;
+  uint256 endTime;
+  uint256 marketPair;
 
-  struct UserData {
-    mapping(uint256 => uint256) assetStaked;
-    bool claimedReward;
-    bool available;
-    uint256 returnAmount;
-  }
-    
-  bytes32 public constant marketCurrency = "ETH/USDT";
-  
+  /* Market Live Data */
+  uint256 startPrice;
+  uint256 totalUsers;
+  uint256 totalStaked;
+  uint256 totalCommission;
+
+  /* Market Result Data */
+  uint256 endPrice;
+  uint256 totalReward;
+  uint256 winningOption;
+
+  /* Constants */
+  uint256 constant minStakeAmount = 1;
+  uint256 constant commissionPerc = 10; //with 2 decimals
+
+  /* External assets */
   address constant ETH_ADDRESS = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
-  address constant PRICE_FEED_ADDRESS = 0x9326BFA02ADD2366b30bacB125260Af641031331;
   address constant ASSET_ADDRESS = 0x4F96Fe3b7A6Cf9725f59d353F723c1bDb64CA6Aa;
-  uint256 constant MIN_STAKE_AMOUNT = 1;
-  uint256 constant COMMISSION_PERCENTAGE = 10; //with 2 decimals
-  uint256 constant totalOptions = 3;
-
-  uint256 totalCommissionAmount;
-
   IMarketRegistry marketRegistry;
   IERC20 assetToken = IERC20(ASSET_ADDRESS);
   
-  MarketData public marketData;
-  MarketResult public marketResult;
-  uint256 totalUsers;
-  mapping(uint256 => address) internal users;
+  /* Predicting users */
+  struct UserData {
+    mapping(uint256 => uint256) assetStaked;
+    bool available;
+    bool claimedReward;
+    uint256 returnAmount;
+  }
   mapping(address => UserData) internal userData;
-  mapping(uint256 => uint256) internal optionsStaked;
+  mapping(uint256 => address) internal users;
+  
+  /* Predicting options */
+  enum Option {
+    Bullish,
+    Bearish
+  }
+  mapping(uint256 => uint256) internal optionStaked;
+  uint256 constant optionCnt = 2;
 
   /**
     * @dev Initialize the market.
     * @param _startTime The time at which market will create.
     * @param _duration The time duration of market.
-    * @param _neutralRange The neutral option range.
+    * @param _marketPair The value pair of market.
+    * @param registry The address of market registry.
     */
-  function initiate(uint256 _startTime, uint256 _duration, uint256 _neutralRange, address registry) external onlyOwner {
-    require(marketData.startTime == 0, "Already initialized");
-    require(_startTime.add(_duration) > now);
-    marketData.startTime = _startTime;
-    marketData.predictionTime = _startTime.add(_duration);
-    marketData.endTime = marketData.predictionTime.add(_duration);
-    marketData.neutralRange = _neutralRange;
-    marketResult.winningOption = totalOptions;
+  function initiate(uint256 _startTime, uint256 _duration, uint256 _marketPair, address registry) external onlyOwner {
+    require(startTime == 0, "Already initialized");
+    require(_startTime.add(_duration) > block.timestamp);
+
+    startTime = _startTime;
+    midTime = _startTime.add(_duration);
+    endTime = midTime.add(_duration);
+    marketPair = _marketPair;
     marketRegistry = IMarketRegistry(registry);
+
+    winningOption = optionCnt;
     marketRegistry.registerMarket();
-    emit MarketCreated(marketData.startTime, marketData.predictionTime, marketData.endTime);
+  }
+  
+  /**
+    * @dev Start market
+    */
+  function startMarket() external onlyOwner returns (uint256 _roundId, uint256 _startPrice) {
+    require(startPrice == 0, "Market already started");
+    require(startTime <= block.timestamp, "It's not yet start time");
+
+    startPrice = marketRegistry.getPairPrice(startTime, marketPair);
+    emit MarketStarted(startPrice);
+    _roundId = roundId;
+    _startPrice = startPrice;
   }
 
   /**
@@ -86,106 +97,72 @@ contract Market is Ownable {
     * @param _option The option on which user placed prediction.
     */
   function placePrediction(uint256 _stakeAmount, uint256 _option) external payable {
-    require(_option < totalOptions, "Option is invalid");
-    require(_stakeAmount >= MIN_STAKE_AMOUNT, "Too small amount");
-    require(now >= marketData.startTime, "Market has not started yet");
-    require(now <= marketData.predictionTime, "Market prediction has expried.");
-
+    require(_option < optionCnt, "Option is invalid");
+    require(block.timestamp >= startTime, "Market has not started yet");
+    require(block.timestamp <= midTime, "Market prediction has expried.");
     require(msg.value == 0, "Not allowed transaction value.");
+
     assetToken.transferFrom(msg.sender, address(this), _stakeAmount);
-    uint256 commissionAmount = _calculatePercentage(COMMISSION_PERCENTAGE, _stakeAmount, 10000);
-    totalCommissionAmount = totalCommissionAmount.add(commissionAmount);
-    uint256 realAmount = _stakeAmount;
-    realAmount = realAmount.sub(commissionAmount);
+    uint256 commissionAmount = _calculatePercentage(commissionPerc, _stakeAmount, 10000);
+    uint256 realAmount = _stakeAmount.sub(commissionAmount);
 
-    require(realAmount > 0, "Amount is zero");
-    _storePredictionData(_option, realAmount);
+    require(realAmount > minStakeAmount, "Too small amount");
+    totalCommission = totalCommission.add(commissionAmount);
+    _storePredictionData(realAmount, _option);
 
-    uint256[] memory totalStaked = new uint256[](totalOptions);
-    for (uint256 i = 0; i < totalOptions; i++) {
-      totalStaked[i] = optionsStaked[i];
+    uint256[] memory _optionStaked = new uint256[](optionCnt);
+    for (uint256 i = 0; i < optionCnt; i++) {
+      _optionStaked[i] = optionStaked[i];
     }
 
-    emit PredictionDataUpdated(totalUsers, totalStaked);
+    emit PredictionDataUpdated(totalUsers, totalStaked, _optionStaked);
   }
-  
-  /**
-    * @dev Calculate the result of market.
-    * @param _value The current price of market currency.
-    */
-  function _postResult(uint256 _value) internal {
-    require(marketData.endTime < now, "Time not reached");
-    require(_value > 0,"value should be greater than 0");
     
-    uint256 i;
-
-    if(_value < marketData.neutralMinValue) {
-      marketResult.winningOption = uint256(Option.Bearish);
-    } else if(_value > marketData.neutralMaxValue) {
-      marketResult.winningOption = uint256(Option.Bullish);
-    } else {
-      marketResult.winningOption = uint256(Option.Neutral);
-    }
-    if (optionsStaked[marketResult.winningOption] > 0) {
-      for(i = 0; i < totalOptions; i++){
-        marketResult.totalReward = marketResult.totalReward.add(optionsStaked[i]);
-      }
-    }
-    for (i = 0; i < totalUsers; i++) {
-      claimReturn(users[i]);
-    }
-  }
-
-  function _calculatePercentage(uint256 _percent, uint256 _value, uint256 _divisor) internal pure returns(uint256) {
-    return _percent.mul(_value).div(_divisor);
-  }
-
   /**
     * @dev Stores the prediction data.
-    * @param _option The option on which user place prediction.
     * @param _stakeAmount The amount staked by user at the time of prediction.
+    * @param _option The option on which user place prediction.
     */
-  function _storePredictionData(uint256 _option, uint256 _stakeAmount) internal {
+  function _storePredictionData(uint256 _stakeAmount, uint256 _option) internal {
     if (userData[msg.sender].available == false) {
-      delete userData[msg.sender];
-      for (uint256 i = 0; i < totalOptions; i++) {
-        userData[msg.sender].assetStaked[i] = 0;
-      }
       userData[msg.sender].available = true;
       users[totalUsers] = msg.sender;
       totalUsers++;
     }
     userData[msg.sender].assetStaked[_option] = userData[msg.sender].assetStaked[_option].add(_stakeAmount);
-    optionsStaked[_option] = optionsStaked[_option].add(_stakeAmount);
+    optionStaked[_option] = optionStaked[_option].add(_stakeAmount);
+    totalStaked = totalStaked.add(_stakeAmount);
   }
   
   /**
     * @dev Settle the market, setting the winning option
     */
-  function endMarket() external onlyOwner {
-    require(marketData.endTime < now, "Market has not ended yet.");
-    marketResult.endPrice = getPrice(marketData.endTime);
-    _postResult(marketResult.endPrice);
-    emit MarketEnded(marketResult.endPrice, marketResult.winningOption);
+  function endMarket() external onlyOwner returns(uint256 _endPrice) {
+    require(endTime < block.timestamp, "Market has not ended yet.");
+    endPrice = marketRegistry.getPairPrice(endTime, marketPair);
+    _postResult();
+    emit MarketEnded(endPrice, winningOption);
+    _endPrice = endPrice;
   }
 
   /**
-    * @dev Get price of provided feed address
-    **/
-  function getPrice(uint256 _time) public view returns (uint256) {
-    require(_time < now);
-    int256 currentRoundAnswer;
-    uint80 currentRoundId;
-    uint256 currentRoundTime;
-    (currentRoundId, currentRoundAnswer, , currentRoundTime, )= IChainLinkOracle(PRICE_FEED_ADDRESS).latestRoundData();
-    while(currentRoundTime > _time) {
-      currentRoundId--;
-      (currentRoundId, currentRoundAnswer, , currentRoundTime, )= IChainLinkOracle(PRICE_FEED_ADDRESS).getRoundData(currentRoundId);
-      if(currentRoundTime <= _time) {
-        break;
-      }
+    * @dev Calculate the result of market.
+    */
+  function _postResult() internal {
+    
+    uint256 i;
+
+    if(endPrice >= startPrice) {
+      winningOption = uint256(Option.Bullish);
+    } else {
+      winningOption = uint256(Option.Bearish);
     }
-    return uint256(currentRoundAnswer);
+    if (optionStaked[winningOption] > 0) {
+      totalReward = totalStaked;
+    }
+    for (i = 0; i < totalUsers; i++) {
+      claimReturn(users[i]);
+    }
   }
 
   /**
@@ -229,78 +206,63 @@ contract Market is Ownable {
   * @return returnAmount uint256 memory representing the return amount.
   */
   function getReturn(address _user) public view returns (uint256) {
-    if (optionsStaked[marketResult.winningOption] == 0) {
+    if (optionStaked[winningOption] == 0) {
       return 0;
     }
     else {
-      return userData[_user].assetStaked[marketResult.winningOption].mul(marketResult.totalReward).div(optionsStaked[marketResult.winningOption]);
+      return userData[_user].assetStaked[winningOption].mul(totalReward).div(optionStaked[winningOption]);
     }
   }
 
-  function getPredictionData() public view returns (uint256 totalParticipants, uint256[] memory totalStaked, uint256[] memory userStaked) {
-    totalStaked = new uint256[](totalOptions);
-    userStaked = new uint256[](totalOptions);
-    totalParticipants = totalUsers;
+  /**
+  * @dev Gets the market data.
+  */
+  function getMarketData() public view 
+    returns (
+      uint256 _startTime, uint256 _midTime, uint256 _endTime, uint256 _marketPair,
+      uint256 _startPrice, uint256 _endPrice,
+      uint256 _totalUsers, uint256 _totalStaked, 
+      uint256 _totalReward, uint256 _winningOption
+    ) {
+    _startTime = startTime;
+    _midTime = midTime;
+    _endTime = endTime;
+    _marketPair = marketPair;
+    _startPrice = startPrice;
+    _endPrice = endPrice;
+    _totalUsers = totalUsers;
+    _totalStaked = totalStaked;
+    _totalReward = totalReward;
+    _winningOption = winningOption;
+  }
+
+  /**
+  * @dev Gets the prediction data.
+  */
+  function getPredictionData() public view returns (uint256 _totalUsers, uint256[] memory _totalStaked, uint256[] memory _userStaked) {
+    _totalStaked = new uint256[](optionCnt);
+    _userStaked = new uint256[](optionCnt);
+    _totalUsers = totalUsers;
     uint256 i;
-    for(i = 0; i < totalOptions; i++) {
-      totalStaked[i] = optionsStaked[i];
+    for(i = 0; i < optionCnt; i++) {
+      _totalStaked[i] = optionStaked[i];
       if (userData[msg.sender].available)
-        userStaked[i] = userData[msg.sender].assetStaked[i];
+        _userStaked[i] = userData[msg.sender].assetStaked[i];
     }
   }
 
-  function getCurrentTime() public view returns (uint256) {
-    return now;
+  function _calculatePercentage(uint256 _percent, uint256 _value, uint256 _divisor) internal pure returns(uint256) {
+    return _percent.mul(_value).div(_divisor);
   }
-
-  /**
-    * @dev Start market
-    */
-  function startMarket() external onlyOwner returns (uint256 startPrice, uint256 neutralMinValue, uint256 neutralMaxValue) {
-    require(marketResult.startPrice == 0, "Market already started");
-    require(marketData.startTime <= now, "Before start time");
-
-    marketResult.startPrice = getPrice(marketData.startTime);
-    marketData.neutralMinValue = marketResult.startPrice.sub(marketData.neutralRange);
-    marketData.neutralMaxValue = marketResult.startPrice.add(marketData.neutralRange);
-    emit MarketStarted(marketResult.startPrice, marketData.neutralMinValue, marketData.neutralMaxValue);
-    startPrice = marketResult.startPrice;
-    neutralMinValue = marketData.neutralMinValue;
-    neutralMaxValue = marketData.neutralMaxValue;
-  }
-
-  /**
-    * @dev Clear market.
-    */
-  function clearMarket() public payable onlyOwner {
-    for (uint256 i = 0; i < totalUsers; i++) {
-      userData[users[i]].available = false;
-    }
-    delete marketData;
-    delete marketResult;
-    delete totalUsers;
-    delete totalCommissionAmount;
-
-    for (uint256 i = 0; i < totalOptions; i++) {
-      optionsStaked[i] = 0;
-    }
-  }
-
-  event MarketCreated (
-    uint256 startTime,
-    uint256 predictionTime,
-    uint256 endTime
-  );
 
   event MarketStarted (
-    uint256 startPrice,
-    uint256 neutralMinValue,
-    uint256 neutralMaxValue
+    uint256 startPrice
   );
 
   event PredictionDataUpdated (
-    uint256 totalParticipants,
-    uint256[] totalStaked
+    uint256 totalUsers,
+    uint256 totalStaked,
+    uint256[] optionStaked
   );
 
   event MarketEnded (

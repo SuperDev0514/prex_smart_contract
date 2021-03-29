@@ -5,19 +5,70 @@
       "constant": false,
       "inputs": [],
       "name": "registerMarket",
-      "outputs": [],
-      "payable": true,
-      "stateMutability": "payable",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_time",
+          "type": "uint256"
+        },
+        {
+          "name": "_pair",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPairPrice",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "from",
+          "type": "uint256"
+        },
+        {
+          "name": "cnt",
+          "type": "uint256"
+        }
+      ],
+      "name": "getMarkets",
+      "outputs": [
+        {
+          "name": "_markets",
+          "type": "address[]"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
       "type": "function"
     },
     {
       "constant": true,
       "inputs": [],
-      "name": "getCurrentMarket",
+      "name": "getCurrentTime",
       "outputs": [
         {
           "name": "",
-          "type": "address"
+          "type": "uint256"
         }
       ],
       "payable": false,
@@ -25,32 +76,32 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"registerMarket\",\"outputs\":[],\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurrentMarket\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"registerMarket()\":{\"details\":\"Register the new market\\r\"}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol\":\"IMarketRegistry\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol\":{\"keccak256\":\"0xe54ada4d3e03b7054bb5425c75636b4f4a199d67beed7fca8be8d96a518b2e59\",\"urls\":[\"bzzr://9f63e7c93903978b7b8ade5f7a3c790037c9525b79ffc3a93ae5e691ae905ef1\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.5.7+commit.6da8b019\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[{\"name\":\"_time\",\"type\":\"uint256\"},{\"name\":\"_pair\",\"type\":\"uint256\"}],\"name\":\"getPairPrice\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"registerMarket\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getCurrentTime\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"from\",\"type\":\"uint256\"},{\"name\":\"cnt\",\"type\":\"uint256\"}],\"name\":\"getMarkets\",\"outputs\":[{\"name\":\"_markets\",\"type\":\"address[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"getCurrentTime()\":{\"details\":\"Get current time of contract\\r\"},\"getMarkets(uint256,uint256)\":{\"details\":\"Provide markets pagination.\\r\",\"params\":{\"cnt\":\"Page size.\\r\",\"from\":\"Page start index from back.\\r\"}},\"getPairPrice(uint256,uint256)\":{\"details\":\"Get price of the specified time and pair\\r\",\"params\":{\"_pair\":\"The pair id which to get price.\\r\",\"_time\":\"The time when to get price.\\r\"}},\"registerMarket()\":{\"details\":\"Register the new market\\r\"}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol\":\"IMarketRegistry\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol\":{\"keccak256\":\"0x79b8b9e8da10cae398a8766270d5f5190bad987f7c004a8dcea9a61f8c57366b\",\"urls\":[\"bzzr://5539dd3e73fff3475cf8f3aacccc951628f4e63b5b8bbe747d63d7eb0293c9c4\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "\r\npragma solidity 0.5.7;\r\n\r\ncontract IMarketRegistry {\r\n  \r\n  /**\r\n  * @dev Register the new market\r\n  */\r\n  function registerMarket() public payable;\r\n\r\n\r\n  function getCurrentMarket() public view returns(address);\r\n\r\n    \r\n}",
+  "source": "\r\npragma solidity 0.5.7;\r\n\r\ncontract IMarketRegistry {\r\n  \r\n  /**\r\n    * @dev Register the new market\r\n    */\r\n  function registerMarket() external returns (uint256);\r\n  \r\n  /**\r\n    * @dev Get price of the specified time and pair\r\n    * @param _time The time when to get price.\r\n    * @param _pair The pair id which to get price.\r\n    */\r\n  function getPairPrice(uint256 _time, uint256 _pair) external returns (uint256);\r\n    \r\n  /**\r\n    * @dev Provide markets pagination.\r\n    * @param from Page start index from back.\r\n    * @param cnt Page size.\r\n  */\r\n  function getMarkets(uint256 from, uint256 cnt) external view returns(address[] memory _markets);\r\n\r\n  /**\r\n  * @dev Get current time of contract\r\n  */\r\n  function getCurrentTime() external view returns (uint256);\r\n}",
   "sourcePath": "E:\\work\\blockchain\\prex\\work\\prex-smart-contracts\\contracts\\interfaces\\IMarketRegistry.sol",
   "ast": {
     "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol",
     "exportedSymbols": {
       "IMarketRegistry": [
-        10991
+        10975
       ]
     },
-    "id": 10992,
+    "id": 10976,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 10982,
+        "id": 10945,
         "literals": [
           "solidity",
           "0.5",
           ".7"
         ],
         "nodeType": "PragmaDirective",
-        "src": "2:22:17"
+        "src": "2:22:16"
       },
       {
         "baseContracts": [],
@@ -58,9 +109,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 10991,
+        "id": 10975,
         "linearizedBaseContracts": [
-          10991
+          10975
         ],
         "name": "IMarketRegistry",
         "nodeType": "ContractDefinition",
@@ -68,98 +119,349 @@
           {
             "body": null,
             "documentation": "@dev Register the new market\r",
-            "id": 10985,
+            "id": 10950,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "registerMarket",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 10983,
+              "id": 10946,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "132:2:17"
+              "src": "136:2:16"
             },
             "returnParameters": {
-              "id": 10984,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "149:0:17"
-            },
-            "scope": 10991,
-            "src": "109:41:17",
-            "stateMutability": "payable",
-            "superFunction": null,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": null,
-            "id": 10990,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "getCurrentMarket",
-            "nodeType": "FunctionDefinition",
-            "parameters": {
-              "id": 10986,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "183:2:17"
-            },
-            "returnParameters": {
-              "id": 10989,
+              "id": 10949,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 10988,
+                  "id": 10948,
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 10990,
-                  "src": "206:7:17",
+                  "scope": 10950,
+                  "src": "157:7:16",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_address",
-                    "typeString": "address"
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 10987,
-                    "name": "address",
+                    "id": 10947,
+                    "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "206:7:17",
-                    "stateMutability": "nonpayable",
+                    "src": "157:7:16",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_address",
-                      "typeString": "address"
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
                     }
                   },
                   "value": null,
                   "visibility": "internal"
                 }
               ],
-              "src": "205:9:17"
+              "src": "156:9:16"
             },
-            "scope": 10991,
-            "src": "158:57:17",
+            "scope": 10975,
+            "src": "113:53:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get price of the specified time and pair\r\n@param _time The time when to get price.\r\n@param _pair The pair id which to get price.\r",
+            "id": 10959,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPairPrice",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10955,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10952,
+                  "name": "_time",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10959,
+                  "src": "364:13:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10951,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "364:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10954,
+                  "name": "_pair",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10959,
+                  "src": "379:13:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10953,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "379:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "363:30:16"
+            },
+            "returnParameters": {
+              "id": 10958,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10957,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10959,
+                  "src": "412:7:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10956,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "412:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "411:9:16"
+            },
+            "scope": 10975,
+            "src": "342:79:16",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Provide markets pagination.\r\n@param from Page start index from back.\r\n@param cnt Page size.\r",
+            "id": 10969,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getMarkets",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10964,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10961,
+                  "name": "from",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10969,
+                  "src": "580:12:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10960,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "580:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 10963,
+                  "name": "cnt",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10969,
+                  "src": "594:11:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10962,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "594:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "579:27:16"
+            },
+            "returnParameters": {
+              "id": 10968,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10967,
+                  "name": "_markets",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10969,
+                  "src": "629:25:16",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                    "typeString": "address[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 10965,
+                      "name": "address",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "629:7:16",
+                      "stateMutability": "nonpayable",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "id": 10966,
+                    "length": null,
+                    "nodeType": "ArrayTypeName",
+                    "src": "629:9:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                      "typeString": "address[]"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "628:27:16"
+            },
+            "scope": 10975,
+            "src": "560:96:16",
             "stateMutability": "view",
             "superFunction": null,
-            "visibility": "public"
+            "visibility": "external"
+          },
+          {
+            "body": null,
+            "documentation": "@dev Get current time of contract\r",
+            "id": 10974,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getCurrentTime",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 10970,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "737:2:16"
+            },
+            "returnParameters": {
+              "id": 10973,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 10972,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 10974,
+                  "src": "763:7:16",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 10971,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "763:7:16",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "762:9:16"
+            },
+            "scope": 10975,
+            "src": "714:58:16",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "external"
           }
         ],
-        "scope": 10992,
-        "src": "28:198:17"
+        "scope": 10976,
+        "src": "28:747:16"
       }
     ],
-    "src": "2:224:17"
+    "src": "2:773:16"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/E/work/blockchain/prex/work/prex-smart-contracts/contracts/interfaces/IMarketRegistry.sol",
       "exportedSymbols": {
         "IMarketRegistry": [
-          10991
+          10975
         ]
       }
     },
@@ -172,9 +474,9 @@
             ".7"
           ]
         },
-        "id": 10982,
+        "id": 10945,
         "name": "PragmaDirective",
-        "src": "2:22:17"
+        "src": "2:22:16"
       },
       {
         "attributes": {
@@ -188,10 +490,10 @@
           "documentation": null,
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            10991
+            10975
           ],
           "name": "IMarketRegistry",
-          "scope": 10992
+          "scope": 10976
         },
         "children": [
           {
@@ -205,10 +507,10 @@
                 null
               ],
               "name": "registerMarket",
-              "scope": 10991,
-              "stateMutability": "payable",
+              "scope": 10975,
+              "stateMutability": "nonpayable",
               "superFunction": null,
-              "visibility": "public"
+              "visibility": "external"
             },
             "children": [
               {
@@ -218,53 +520,9 @@
                   ]
                 },
                 "children": [],
-                "id": 10983,
+                "id": 10946,
                 "name": "ParameterList",
-                "src": "132:2:17"
-              },
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 10984,
-                "name": "ParameterList",
-                "src": "149:0:17"
-              }
-            ],
-            "id": 10985,
-            "name": "FunctionDefinition",
-            "src": "109:41:17"
-          },
-          {
-            "attributes": {
-              "body": null,
-              "documentation": null,
-              "implemented": false,
-              "isConstructor": false,
-              "kind": "function",
-              "modifiers": [
-                null
-              ],
-              "name": "getCurrentMarket",
-              "scope": 10991,
-              "stateMutability": "view",
-              "superFunction": null,
-              "visibility": "public"
-            },
-            "children": [
-              {
-                "attributes": {
-                  "parameters": [
-                    null
-                  ]
-                },
-                "children": [],
-                "id": 10986,
-                "name": "ParameterList",
-                "src": "183:2:17"
+                "src": "136:2:16"
               },
               {
                 "children": [
@@ -272,48 +530,353 @@
                     "attributes": {
                       "constant": false,
                       "name": "",
-                      "scope": 10990,
+                      "scope": 10950,
                       "stateVariable": false,
                       "storageLocation": "default",
-                      "type": "address",
+                      "type": "uint256",
                       "value": null,
                       "visibility": "internal"
                     },
                     "children": [
                       {
                         "attributes": {
-                          "name": "address",
-                          "stateMutability": "nonpayable",
-                          "type": "address"
+                          "name": "uint256",
+                          "type": "uint256"
                         },
-                        "id": 10987,
+                        "id": 10947,
                         "name": "ElementaryTypeName",
-                        "src": "206:7:17"
+                        "src": "157:7:16"
                       }
                     ],
-                    "id": 10988,
+                    "id": 10948,
                     "name": "VariableDeclaration",
-                    "src": "206:7:17"
+                    "src": "157:7:16"
                   }
                 ],
-                "id": 10989,
+                "id": 10949,
                 "name": "ParameterList",
-                "src": "205:9:17"
+                "src": "156:9:16"
               }
             ],
-            "id": 10990,
+            "id": 10950,
             "name": "FunctionDefinition",
-            "src": "158:57:17"
+            "src": "113:53:16"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": "@dev Get price of the specified time and pair\r\n@param _time The time when to get price.\r\n@param _pair The pair id which to get price.\r",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getPairPrice",
+              "scope": 10975,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_time",
+                      "scope": 10959,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 10951,
+                        "name": "ElementaryTypeName",
+                        "src": "364:7:16"
+                      }
+                    ],
+                    "id": 10952,
+                    "name": "VariableDeclaration",
+                    "src": "364:13:16"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_pair",
+                      "scope": 10959,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 10953,
+                        "name": "ElementaryTypeName",
+                        "src": "379:7:16"
+                      }
+                    ],
+                    "id": 10954,
+                    "name": "VariableDeclaration",
+                    "src": "379:13:16"
+                  }
+                ],
+                "id": 10955,
+                "name": "ParameterList",
+                "src": "363:30:16"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 10959,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 10956,
+                        "name": "ElementaryTypeName",
+                        "src": "412:7:16"
+                      }
+                    ],
+                    "id": 10957,
+                    "name": "VariableDeclaration",
+                    "src": "412:7:16"
+                  }
+                ],
+                "id": 10958,
+                "name": "ParameterList",
+                "src": "411:9:16"
+              }
+            ],
+            "id": 10959,
+            "name": "FunctionDefinition",
+            "src": "342:79:16"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": "@dev Provide markets pagination.\r\n@param from Page start index from back.\r\n@param cnt Page size.\r",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getMarkets",
+              "scope": 10975,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "from",
+                      "scope": 10969,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 10960,
+                        "name": "ElementaryTypeName",
+                        "src": "580:7:16"
+                      }
+                    ],
+                    "id": 10961,
+                    "name": "VariableDeclaration",
+                    "src": "580:12:16"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "cnt",
+                      "scope": 10969,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 10962,
+                        "name": "ElementaryTypeName",
+                        "src": "594:7:16"
+                      }
+                    ],
+                    "id": 10963,
+                    "name": "VariableDeclaration",
+                    "src": "594:11:16"
+                  }
+                ],
+                "id": 10964,
+                "name": "ParameterList",
+                "src": "579:27:16"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_markets",
+                      "scope": 10969,
+                      "stateVariable": false,
+                      "storageLocation": "memory",
+                      "type": "address[]",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "length": null,
+                          "type": "address[]"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "name": "address",
+                              "stateMutability": "nonpayable",
+                              "type": "address"
+                            },
+                            "id": 10965,
+                            "name": "ElementaryTypeName",
+                            "src": "629:7:16"
+                          }
+                        ],
+                        "id": 10966,
+                        "name": "ArrayTypeName",
+                        "src": "629:9:16"
+                      }
+                    ],
+                    "id": 10967,
+                    "name": "VariableDeclaration",
+                    "src": "629:25:16"
+                  }
+                ],
+                "id": 10968,
+                "name": "ParameterList",
+                "src": "628:27:16"
+              }
+            ],
+            "id": 10969,
+            "name": "FunctionDefinition",
+            "src": "560:96:16"
+          },
+          {
+            "attributes": {
+              "body": null,
+              "documentation": "@dev Get current time of contract\r",
+              "implemented": false,
+              "isConstructor": false,
+              "kind": "function",
+              "modifiers": [
+                null
+              ],
+              "name": "getCurrentTime",
+              "scope": 10975,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "external"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 10970,
+                "name": "ParameterList",
+                "src": "737:2:16"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 10974,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "uint256",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "uint256",
+                          "type": "uint256"
+                        },
+                        "id": 10971,
+                        "name": "ElementaryTypeName",
+                        "src": "763:7:16"
+                      }
+                    ],
+                    "id": 10972,
+                    "name": "VariableDeclaration",
+                    "src": "763:7:16"
+                  }
+                ],
+                "id": 10973,
+                "name": "ParameterList",
+                "src": "762:9:16"
+              }
+            ],
+            "id": 10974,
+            "name": "FunctionDefinition",
+            "src": "714:58:16"
           }
         ],
-        "id": 10991,
+        "id": 10975,
         "name": "ContractDefinition",
-        "src": "28:198:17"
+        "src": "28:747:16"
       }
     ],
-    "id": 10992,
+    "id": 10976,
     "name": "SourceUnit",
-    "src": "2:224:17"
+    "src": "2:773:16"
   },
   "compiler": {
     "name": "solc",
@@ -321,9 +884,26 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-03-12T21:21:36.698Z",
+  "updatedAt": "2021-03-29T09:20:05.131Z",
   "devdoc": {
     "methods": {
+      "getCurrentTime()": {
+        "details": "Get current time of contract\r"
+      },
+      "getMarkets(uint256,uint256)": {
+        "details": "Provide markets pagination.\r",
+        "params": {
+          "cnt": "Page size.\r",
+          "from": "Page start index from back.\r"
+        }
+      },
+      "getPairPrice(uint256,uint256)": {
+        "details": "Get price of the specified time and pair\r",
+        "params": {
+          "_pair": "The pair id which to get price.\r",
+          "_time": "The time when to get price.\r"
+        }
+      },
       "registerMarket()": {
         "details": "Register the new market\r"
       }
