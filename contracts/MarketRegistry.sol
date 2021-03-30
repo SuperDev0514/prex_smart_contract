@@ -89,13 +89,19 @@ contract MarketRegistry is Ownable {
   }
 
   /**
-  * @dev Get market registry data.
+  * @dev Get registry data.
   */
-  function getRegistryData() external view returns(uint256 _nPairs, address[] memory _markets) {
-    uint256 i;
+  function getRegistryData() external view returns(uint256 _nPairs, uint256 _time) {
     _nPairs = marketPairs.length;
+    _time = block.timestamp;
+  }
+
+  /**
+  * @dev Get market list.
+  */
+  function getMarketList() external view returns(address[] memory _markets) {
     _markets = new address[](markets.length);
-    for (i = 0; i < markets.length; i++) {
+    for (uint256 i = 0; i < markets.length; i++) {
       _markets[i] = markets[i].addr;
     }
   }

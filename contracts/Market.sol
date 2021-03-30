@@ -75,7 +75,7 @@ contract Market is Ownable {
     marketRegistry = IMarketRegistry(registry);
 
     winningOption = optionCnt;
-    marketRegistry.registerMarket();
+    roundId = marketRegistry.registerMarket();
   }
   
   /**
@@ -219,11 +219,13 @@ contract Market is Ownable {
   */
   function getMarketData() public view 
     returns (
+      uint256 _roundId,
       uint256 _startTime, uint256 _midTime, uint256 _endTime, uint256 _marketPair,
       uint256 _startPrice, uint256 _endPrice,
       uint256 _totalUsers, uint256 _totalStaked, 
       uint256 _totalReward, uint256 _winningOption
     ) {
+    _roundId = roundId;
     _startTime = startTime;
     _midTime = midTime;
     _endTime = endTime;
