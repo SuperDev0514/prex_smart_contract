@@ -59,7 +59,7 @@ contract MarketRegistry is Ownable {
     * @param _startTime The time at which market will create.
     * @param _duration The time duration of market.
     */
-  function createMarket(uint256 _pair, uint256 _startTime, uint256 _duration) external {
+  function createMarket(uint256 _pair, uint256 _startTime, uint256 _duration) external onlyOwner {
     require(_pair >= 0 && _pair < marketPairs.length, "Invalid market pair.");
     uint256 _roundId = marketPairs[_pair].totalRounds;
     Market market = new Market(_pair, _roundId, _startTime, _duration);
@@ -69,7 +69,7 @@ contract MarketRegistry is Ownable {
     marketPairs[_pair].totalRounds++;
     market.transferOwnership(msg.sender);
 
-    emit MarketCreated(_pair, _roundId, msg.sender);
+    emit MarketCreated(_pair, _roundId, _marketAddress);
   }
 
   /**
@@ -113,6 +113,16 @@ contract MarketRegistry is Ownable {
     uint256 i;
     for (i = 0; i < realCnt; i++) {
       _markets[i] = markets[k--].addr;
+    }
+  }
+
+  /**
+  * @dev Clear market list.
+  */
+  function clearMarket() external onlyOwner {
+    delete markets;
+    for (uint256 i = 0; i < marketPairs.length; i++) {
+      marketPairs[i].totalRounds = 0;
     }
   }
 

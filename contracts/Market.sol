@@ -79,14 +79,12 @@ contract Market is Ownable {
   /**
     * @dev Start market
     */
-  function startMarket() external onlyOwner returns (uint256 _roundId, uint256 _startPrice) {
+  function startMarket() external onlyOwner {
     require(startPrice == 0, "Market already started");
     require(startTime <= block.timestamp, "It's not yet start time");
 
     startPrice = marketRegistry.getPairPrice(startTime, marketPair);
     emit MarketStarted(startPrice);
-    _roundId = roundId;
-    _startPrice = startPrice;
   }
 
   /**
