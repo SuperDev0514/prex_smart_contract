@@ -11,7 +11,6 @@ contract Market is Ownable {
   using SafeMath for *;
 
   uint256 roundId;
-
   /* Market Creation Data */
   uint256 startTime;
   uint256 midTime;
@@ -58,24 +57,23 @@ contract Market is Ownable {
   uint256 constant optionCnt = 2;
 
   /**
-    * @dev Initialize the market.
+    * @dev Create a market.
+    * @param _marketPair The value pair of market.
+    * @param _roundId The round id of market.
     * @param _startTime The time at which market will create.
     * @param _duration The time duration of market.
-    * @param _marketPair The value pair of market.
-    * @param registry The address of market registry.
     */
-  function initiate(uint256 _startTime, uint256 _duration, uint256 _marketPair, address registry) external onlyOwner {
-    require(startTime == 0, "Already initialized");
+  constructor (uint256 _marketPair, uint256 _roundId, uint256 _startTime, uint256 _duration) public {
     require(_startTime.add(_duration) > block.timestamp);
 
+    roundId = _roundId;
+    marketPair = _marketPair;
     startTime = _startTime;
     midTime = _startTime.add(_duration);
     endTime = midTime.add(_duration);
-    marketPair = _marketPair;
-    marketRegistry = IMarketRegistry(registry);
+    marketRegistry = IMarketRegistry(msg.sender);
 
     winningOption = optionCnt;
-    roundId = marketRegistry.registerMarket();
   }
   
   /**

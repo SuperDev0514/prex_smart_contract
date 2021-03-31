@@ -5,8 +5,9 @@ contract IMarketRegistry {
   
   /**
     * @dev Register the new market
+    * @param _pair The value pair of market.
     */
-  function registerMarket() external returns (uint256);
+  function registerMarket(uint256 _pair) external returns (uint256);
   
   /**
     * @dev Get price of the specified time and pair
@@ -15,13 +16,6 @@ contract IMarketRegistry {
     */
   function getPairPrice(uint256 _time, uint256 _pair) external returns (uint256);
     
-  /**
-    * @dev Provide markets pagination.
-    * @param from Page start index from back.
-    * @param cnt Page size.
-  */
-  function getMarkets(uint256 from, uint256 cnt) external view returns(address[] memory _markets);
-
   /**
   * @dev Get current time of contract
   */
