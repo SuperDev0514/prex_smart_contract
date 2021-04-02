@@ -34,8 +34,8 @@ contract MarketRegistry is Ownable {
   MarketInfo[] public markets;
   
   constructor () public {
-    marketPairs.push(MarketPair("ETH/USD", 0x9326BFA02ADD2366b30bacB125260Af641031331, 9, 0));
-    marketPairs.push(MarketPair("BTC/USD", 0x6135b13325bfC4B00278B4abC5e20bbce2D6580e, 9, 0));
+    marketPairs.push(MarketPair("ETH/USD", 0x9326BFA02ADD2366b30bacB125260Af641031331, 8, 0));
+    marketPairs.push(MarketPair("BTC/USD", 0x6135b13325bfC4B00278B4abC5e20bbce2D6580e, 8, 0));
   }
 
   /**
